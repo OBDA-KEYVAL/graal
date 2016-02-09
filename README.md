@@ -1,8 +1,6 @@
-# Graal
+# Graal KeyVal
 
-[See Graal homepage](https://graphik-team.github.io/graal)
-
-## How to build graal? ##
+## How to build ? ##
 
 * install [git](http://www.git-scm.com/)
 * clone the repository
