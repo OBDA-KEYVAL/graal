@@ -1,16 +1,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	
-	<parent>
-		<groupId>fr.lirmm.graphik</groupId>
-		<artifactId>graal-main-project</artifactId>
-		<version>1.1.2-SNAPSHOT </version>
-	</parent>
-	
+    <properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <graal.version>1.1.1</graal.version>
+	</properties>
+
+	<groupId>fr.lirmm.graphik</groupId>
 	<artifactId>graal-keyval</artifactId>
 	<name>fr.lirmm.graphik:graal-keyval</name>
 	<packaging>jar</packaging>
 	<description></description>
+    <version>0.1.0-SNAPSHOT</version>
 
 	<developers>
 	</developers>
@@ -19,17 +20,17 @@
 		<dependency>
 			<groupId>fr.lirmm.graphik</groupId>
 			<artifactId>graal-api</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${graal.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>fr.lirmm.graphik</groupId>
 			<artifactId>graal-core</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${graal.version}</version>
 		</dependency>
         <dependency>
 			<groupId>fr.lirmm.graphik</groupId>
 			<artifactId>graal-homomorphism</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${graal.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -47,12 +48,6 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.11</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>fr.lirmm.graphik</groupId>
-			<artifactId>graal-io-dlgp</artifactId>
-			<version>${project.parent.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
