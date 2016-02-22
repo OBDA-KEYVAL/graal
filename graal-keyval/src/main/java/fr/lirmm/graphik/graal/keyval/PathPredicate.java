@@ -55,19 +55,19 @@ import fr.lirmm.graphik.util.MethodNotImplementedError;
  */
 public class PathPredicate implements Predicate {
 
-	@Override
+	
 	public boolean evaluate(RowSet arg0) {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public boolean evaluate(Object arg0, int arg1) throws SQLException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public boolean evaluate(Object arg0, String arg1) throws SQLException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();

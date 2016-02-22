@@ -58,55 +58,55 @@ import fr.lirmm.graphik.util.MethodNotImplementedError;
  */
 public class PathAtom implements Atom {
 
-	@Override
+	
 	public int compareTo(Atom arg0) {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public void appendTo(StringBuilder sb) {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public void setPredicate(Predicate predicate) {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public Predicate getPredicate() {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public void setTerm(int index, Term term) {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public Term getTerm(int index) {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public List<Term> getTerms() {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public Collection<Term> getTerms(Type type) {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public Iterator<Term> iterator() {
 		// TODO implement this method
 		throw new MethodNotImplementedError();

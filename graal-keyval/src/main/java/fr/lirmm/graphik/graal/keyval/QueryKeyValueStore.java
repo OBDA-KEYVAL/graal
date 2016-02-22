@@ -55,19 +55,19 @@ import fr.lirmm.graphik.util.stream.CloseableIterator;
  */
 public class QueryKeyValueStore implements Homomorphism<PathQuery, KeyValueStore> {
 
-	@Override
+	
 	public void setProfiler(Profiler profiler) {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public Profiler getProfiler() {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public <U1 extends PathQuery, U2 extends KeyValueStore> CloseableIterator<Substitution> execute(U1 q, U2 a)
 	    throws HomomorphismException {
 		// TODO implement this method

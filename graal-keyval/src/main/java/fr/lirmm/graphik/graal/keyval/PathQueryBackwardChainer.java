@@ -53,31 +53,31 @@ import fr.lirmm.graphik.util.stream.GIterator;
  */
 public class PathQueryBackwardChainer implements GIterator<PathQuery>, Profilable {
 
-	@Override
+	
 	public void remove() {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public void setProfiler(Profiler profiler) {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public Profiler getProfiler() {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public boolean hasNext() {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public PathQuery next() {
 		// TODO implement this method
 		throw new MethodNotImplementedError();

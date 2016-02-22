@@ -56,61 +56,61 @@ import fr.lirmm.graphik.util.MethodNotImplementedError;
  */
 public class NoRule implements Rule {
 
-	@Override
+	
 	public int compareTo(Rule o) {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public void appendTo(StringBuilder sb) {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public String getLabel() {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public void setLabel(String label) {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public InMemoryAtomSet getBody() {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public InMemoryAtomSet getHead() {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public Set<Term> getFrontier() {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public Set<Term> getExistentials() {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public Set<Term> getTerms(Type type) {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public Set<Term> getTerms() {
 		// TODO implement this method
 		throw new MethodNotImplementedError();

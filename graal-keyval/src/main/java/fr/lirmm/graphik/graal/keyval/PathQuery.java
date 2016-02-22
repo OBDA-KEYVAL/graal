@@ -51,13 +51,13 @@ import fr.lirmm.graphik.util.MethodNotImplementedError;
  */
 public class PathQuery implements Query {
 
-	@Override
+	
 	public void appendTo(StringBuilder sb) {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public boolean isBoolean() {
 		// TODO implement this method
 		throw new MethodNotImplementedError();

@@ -61,115 +61,111 @@ import fr.lirmm.graphik.util.stream.CloseableIterator;
  */
 public class KeyValueStore implements Store {
 
-	@Override
 	public boolean contains(Atom atom) throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public Set<Predicate> getPredicates() throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public Set<Term> getTerms() throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
 	public Set<Term> getTerms(Type type) throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
 	public boolean isSubSetOf(AtomSet atomset) throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
 	public boolean isEmpty() throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public boolean add(Atom atom) throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public boolean addAll(Iterator<? extends Atom> atoms) throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public boolean addAll(AtomSet atoms) throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public boolean remove(Atom atom) throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public boolean removeAll(Iterator<? extends Atom> atoms) throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public boolean removeAll(AtomSet atoms) throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public void clear() throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public CloseableIterator<Atom> iterator() {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public CloseableIterator<Atom> match(Atom atom) throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public CloseableIterator<Predicate> predicatesIterator() throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public CloseableIterator<Term> termsIterator() throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public CloseableIterator<Term> termsIterator(Type type) throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	@Override
+	
 	public void close() {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
