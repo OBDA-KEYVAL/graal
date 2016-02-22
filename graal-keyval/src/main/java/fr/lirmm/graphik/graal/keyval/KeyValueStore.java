@@ -42,8 +42,19 @@
  */
 package fr.lirmm.graphik.graal.keyval;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Set;
+
+import static java.util.Arrays.asList;
+
+import org.bson.*;
+
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoDatabase;
 
 import fr.lirmm.graphik.graal.api.core.Atom;
 import fr.lirmm.graphik.graal.api.core.AtomSet;
@@ -164,6 +175,32 @@ public class KeyValueStore implements Store {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
+	
+	public static void connexionDB() throws ParseException {
+		MongoClient mongoclient = new MongoClient();
+		MongoDatabase db = mongoclient.getDatabase("test");
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ENGLISH);
+		db.getCollection("restaurants").insertOne(
+		        new Document("address",
+		                new Document()
+		                        .append("street", "2 Avenue")
+		                        .append("zipcode", "10075")
+		                        .append("building", "1480")
+		                        .append("coord", asList(-73.9557413, 40.7720266)))
+		                .append("borough", "Manhattan")
+		                .append("cuisine", "Italian")
+		                .append("grades", asList(
+		                        new Document()
+		                                .append("date", format.parse("2014-10-01T00:00:00Z"))
+		                                .append("grade", "A")
+		                                .append("score", 11),
+		                        new Document()
+		                                .append("date", format.parse("2014-01-16T00:00:00Z"))
+		                                .append("grade", "B")
+		                                .append("score", 17)))
+		                .append("name", "Vella")
+		                .append("restaurant_id", "41704620"));
+	}
 
 	
 	public void close() {
@@ -171,6 +208,15 @@ public class KeyValueStore implements Store {
 		throw new MethodNotImplementedError();
 	}
 
+	public static void main(String[] args) {
+		System.out.println("Hello Word, tentative de connexion ...");
+		try {
+			connexionDB();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 
 }
