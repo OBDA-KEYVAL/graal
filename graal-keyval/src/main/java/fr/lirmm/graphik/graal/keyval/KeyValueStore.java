@@ -53,8 +53,11 @@ import static java.util.Arrays.asList;
 
 import org.bson.*;
 
+import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.MongoIterable;
 
 import fr.lirmm.graphik.graal.api.core.Atom;
 import fr.lirmm.graphik.graal.api.core.AtomSet;
@@ -66,11 +69,14 @@ import fr.lirmm.graphik.graal.api.store.Store;
 import fr.lirmm.graphik.util.MethodNotImplementedError;
 import fr.lirmm.graphik.util.stream.CloseableIterator;
 
+
 /**
  * @author Clément Sipieter (INRIA) {@literal <clement@6pi.fr>}
  *
  */
 public class KeyValueStore implements Store {
+	
+	private MongoDatabase database;
 
 	public boolean contains(Atom atom) throws AtomSetException {
 		// TODO implement this method
@@ -176,47 +182,25 @@ public class KeyValueStore implements Store {
 		throw new MethodNotImplementedError();
 	}
 	
-	public static void connexionDB() throws ParseException {
-		MongoClient mongoclient = new MongoClient();
-		MongoDatabase db = mongoclient.getDatabase("test");
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ENGLISH);
-		db.getCollection("restaurants").insertOne(
-		        new Document("address",
-		                new Document()
-		                        .append("street", "2 Avenue")
-		                        .append("zipcode", "10075")
-		                        .append("building", "1480")
-		                        .append("coord", asList(-73.9557413, 40.7720266)))
-		                .append("borough", "Manhattan")
-		                .append("cuisine", "Italian")
-		                .append("grades", asList(
-		                        new Document()
-		                                .append("date", format.parse("2014-10-01T00:00:00Z"))
-		                                .append("grade", "A")
-		                                .append("score", 11),
-		                        new Document()
-		                                .append("date", format.parse("2014-01-16T00:00:00Z"))
-		                                .append("grade", "B")
-		                                .append("score", 17)))
-		                .append("name", "Vella")
-		                .append("restaurant_id", "41704620"));
+	public void connexionDB(String address,Integer port,String databaseName) throws ParseException {
+		MongoClient mongoclient = new MongoClient(address,port);
+		this.database = mongoclient.getDatabase(databaseName);
+		System.out.println("Connect to \""+databaseName+"\" succefully on "+address+"@"+port);
+		}
+	
+	public void showCollections(){
+		MongoIterable<String> colls = this.database.listCollectionNames();
+		System.out.println("Collections :");
+		for(String str: colls){
+			System.out.println("\t"+str);
+		}
 	}
-
 	
 	public void close() {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	public static void main(String[] args) {
-		System.out.println("Hello Word, tentative de connexion ...");
-		try {
-			connexionDB();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-
+	
 }
+
