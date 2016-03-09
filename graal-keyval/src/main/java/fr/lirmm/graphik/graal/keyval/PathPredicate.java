@@ -88,20 +88,21 @@ public class PathPredicate {
 		return pathSize;
 	}
 	
+	public ArrayList<Predicate> getPredicates() {
+		return predicatesList;
+	}
+	
+	public Predicate getPredicateIndex(Integer i){
+		if(i>=pathSize)
+			return null;
+		else
+			return predicatesList.get(i);
+	}
+	
 	public String toString(){
 		return predicatesList+":"+pathSize;
 	}
 	
-	public static void main(String[] args) {
-		PathPredicate pathPre = new PathPredicate();
-		System.out.println(pathPre);
-		Predicate pre = new Predicate("art", 1);
-		pathPre.addPredicate(pre);
-		System.out.println(pathPre);
-		ArrayList<Predicate> arrPre = new ArrayList<Predicate>();
-		arrPre.add(pre);
-		PathPredicate pp = new PathPredicate(arrPre);
-		System.out.println(pp);
-	}
+	
 
 }

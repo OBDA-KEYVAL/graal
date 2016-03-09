@@ -58,6 +58,13 @@ import fr.lirmm.graphik.util.MethodNotImplementedError;
  */
 public class PathAtom implements Atom {
 
+	private PathPredicate pathPredicat;
+	private Term term;
+	
+	public PathAtom (PathPredicate pp,Term tr){
+		pathPredicat = pp;
+		term = tr;
+	}
 	
 	public int compareTo(Atom arg0) {
 		// TODO implement this method
@@ -106,7 +113,7 @@ public class PathAtom implements Atom {
 		throw new MethodNotImplementedError();
 	}
 
-	
+	//Toujours un seul term sur nos PathAtome 
 	public Iterator<Term> iterator() {
 		// TODO implement this method
 		throw new MethodNotImplementedError();

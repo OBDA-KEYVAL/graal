@@ -28,6 +28,18 @@ public class PathPredicateTest {
 		arrPre.add(pre);
 		PathPredicate pp2 = new PathPredicate(arrPre);
 		assertEquals((Integer)1, pp2.getSizePath());
+		assertEquals("testPre", pp2.getPredicateIndex(0).getIdentifier().toString());
+	}
+	
+	@Test
+	public void testConstructeurCopie(){
+		Predicate pre1 = new Predicate("a", 1);
+		Predicate pre2 = new Predicate("b", 1);
+		ArrayList<Predicate> arrPre = new ArrayList<Predicate>();
+		arrPre.add(pre1);
+		arrPre.add(pre2);
+		PathPredicate pp = new PathPredicate(arrPre);
+		assertEquals((Integer)2, pp.getSizePath());
 	}
 
 }
