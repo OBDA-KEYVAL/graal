@@ -6,11 +6,10 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		System.out.println("Ca marche !!!");
-		KeyValueStore store = new KeyValueStore();
 		try {
-			store.connexionDB("localhost", 27017, "test");
+			KeyValueStoreMongoDB store = new KeyValueStoreMongoDB("localhost", 27017, "test");
 			store.showCollections();
+			System.out.println("Ca marche !!!");
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

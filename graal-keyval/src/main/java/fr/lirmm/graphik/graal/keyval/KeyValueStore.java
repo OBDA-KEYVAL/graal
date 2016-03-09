@@ -42,22 +42,11 @@
  */
 package fr.lirmm.graphik.graal.keyval;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.util.Iterator;
-import java.util.Locale;
+
 import java.util.Set;
 
-import static java.util.Arrays.asList;
-
-import org.bson.*;
-
-import com.mongodb.DBCollection;
-import com.mongodb.MongoClient;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.MongoIterable;
 
 import fr.lirmm.graphik.graal.api.core.Atom;
 import fr.lirmm.graphik.graal.api.core.AtomSet;
@@ -74,9 +63,8 @@ import fr.lirmm.graphik.util.stream.CloseableIterator;
  * @author Clément Sipieter (INRIA) {@literal <clement@6pi.fr>}
  *
  */
-public class KeyValueStore implements Store {
+public abstract class  KeyValueStore implements Store {
 	
-	private MongoDatabase database;
 
 	public boolean contains(Atom atom) throws AtomSetException {
 		// TODO implement this method
@@ -182,19 +170,6 @@ public class KeyValueStore implements Store {
 		throw new MethodNotImplementedError();
 	}
 	
-	public void connexionDB(String address,Integer port,String databaseName) throws ParseException {
-		MongoClient mongoclient = new MongoClient(address,port);
-		this.database = mongoclient.getDatabase(databaseName);
-		System.out.println("Connect to \""+databaseName+"\" succefully on "+address+"@"+port);
-		}
-	
-	public void showCollections(){
-		MongoIterable<String> colls = this.database.listCollectionNames();
-		System.out.println("Collections :");
-		for(String str: colls){
-			System.out.println("\t"+str);
-		}
-	}
 	
 	public void close() {
 		// TODO implement this method
@@ -203,4 +178,3 @@ public class KeyValueStore implements Store {
 
 	
 }
-
