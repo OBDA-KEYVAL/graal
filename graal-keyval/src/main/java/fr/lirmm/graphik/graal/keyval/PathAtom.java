@@ -56,7 +56,7 @@ import fr.lirmm.graphik.util.MethodNotImplementedError;
  * @author Clément Sipieter (INRIA) {@literal <clement@6pi.fr>}
  *
  */
-public class PathAtom implements Atom {
+public class PathAtom implements InterfacePathAtom{
 
 	private PathPredicate pathPredicat;
 	private Term term;
@@ -114,7 +114,7 @@ public class PathAtom implements Atom {
 	}
 
 	//Toujours un seul term sur nos PathAtome 
-	public Iterator<Term> iterator() {
+	public Iterator<Predicate> iterator() {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
