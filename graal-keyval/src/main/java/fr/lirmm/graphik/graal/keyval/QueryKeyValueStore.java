@@ -42,6 +42,8 @@
  */
 package fr.lirmm.graphik.graal.keyval;
 
+import java.util.Set;
+
 import fr.lirmm.graphik.graal.api.core.Substitution;
 import fr.lirmm.graphik.graal.api.homomorphism.Homomorphism;
 import fr.lirmm.graphik.graal.api.homomorphism.HomomorphismException;
@@ -55,6 +57,8 @@ import fr.lirmm.graphik.util.stream.CloseableIterator;
  */
 public class QueryKeyValueStore implements Homomorphism<PathQuery, KeyValueStore> {
 
+	private PathQuery query;
+	private Set<KeyValueStore> KeyValStrSet;
 	
 	public void setProfiler(Profiler profiler) {
 		// TODO implement this method
