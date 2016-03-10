@@ -42,18 +42,20 @@
  */
 package fr.lirmm.graphik.graal.keyval;
 
-import java.text.DateFormat;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Iterator;
-import java.util.Locale;
 import java.util.Set;
 
-import static java.util.Arrays.asList;
-
-import org.bson.*;
+import org.bson.Document;
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
 
 import com.mongodb.DBCollection;
+import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -65,60 +67,74 @@ import fr.lirmm.graphik.graal.api.core.AtomSetException;
 import fr.lirmm.graphik.graal.api.core.Predicate;
 import fr.lirmm.graphik.graal.api.core.Term;
 import fr.lirmm.graphik.graal.api.core.Term.Type;
-import fr.lirmm.graphik.graal.api.store.Store;
 import fr.lirmm.graphik.util.MethodNotImplementedError;
 import fr.lirmm.graphik.util.stream.CloseableIterator;
-
 
 /**
  * @author Clément Sipieter (INRIA) {@literal <clement@6pi.fr>}
  *
  */
 public class KeyValueStoreMongoDB extends KeyValueStore {
-	
+
 	private MongoClient client;
 	private MongoDatabase db;
-	
-	public static MongoDatabase connexionDB(String address,Integer port,String databaseName) throws ParseException {
-		MongoClient mongoclient = new MongoClient(address,port);
-		MongoDatabase mongdb = mongoclient.getDatabase(databaseName);
-		System.out.println("Connect to \""+databaseName+"\" succefully on "+address+"@"+port);
-		return mongdb;
-		}
-	
+
+//	public static MongoDatabase connexionDB(String address, Integer port, String databaseName) throws ParseException {
+//		MongoClient mongoclient = new MongoClient(address, port);
+//		MongoDatabase mongdb = mongoclient.getDatabase(databaseName);
+//		System.out.println("Connect to \"" + databaseName + "\" succefully on " + address + "@" + port);
+//		return mongdb;
+//	}
+
 	public KeyValueStoreMongoDB() throws ParseException {
 		client = new MongoClient();
 	}
-	
-	public KeyValueStoreMongoDB (String add,Integer port) throws ParseException{
-		client = new MongoClient(add,port);
+
+	public KeyValueStoreMongoDB(String add, Integer port) throws ParseException {
+		client = new MongoClient(add, port);
 	}
-	
-	public KeyValueStoreMongoDB(String add,Integer port,String dbname) throws ParseException{
-		client = new MongoClient(add,port);
+
+	public KeyValueStoreMongoDB(String add, Integer port, String dbname) throws ParseException {
+		client = new MongoClient(add, port);
 		db = client.getDatabase(dbname);
 	}
-	
-	public void showCollections(){
-	MongoIterable<String> colls = this.db.listCollectionNames();
-	System.out.println("Collections :");
-	for(String str: colls){
-		System.out.println("\t"+str);
+
+	public void importJsonIntoCollection(String collname,String jsonFile) throws IOException {
+
+		MongoCollection<Document> collection = this.db.getCollection(collname);  // initialize to the collection to which you want to write
+
+
+		BufferedReader reader = new BufferedReader(new FileReader(jsonFile));
+		try {
+		    String json;
+
+		    while ((json = reader.readLine()) != null) {
+		        collection.insertOne(Document.parse(json));
+		    } 
+		} finally {
+		    reader.close();
+		}
+
 	}
-}
-	
+
+	public void showCollections() {
+		MongoIterable<String> colls = this.db.listCollectionNames();
+		System.out.println("Collections :");
+		for (String str : colls) {
+			System.out.println("\t" + str);
+		}
+	}
+
 	public boolean contains(Atom atom) throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	
 	public Set<Predicate> getPredicates() throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	
 	public Set<Term> getTerms() throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
@@ -139,87 +155,69 @@ public class KeyValueStoreMongoDB extends KeyValueStore {
 		throw new MethodNotImplementedError();
 	}
 
-	
 	public boolean add(Atom atom) throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	
 	public boolean addAll(Iterator<? extends Atom> atoms) throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	
 	public boolean addAll(AtomSet atoms) throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	
 	public boolean remove(Atom atom) throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	
 	public boolean removeAll(Iterator<? extends Atom> atoms) throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	
 	public boolean removeAll(AtomSet atoms) throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	
 	public void clear() throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	
 	public CloseableIterator<Atom> iterator() {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	
 	public CloseableIterator<Atom> match(Atom atom) throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	
 	public CloseableIterator<Predicate> predicatesIterator() throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	
 	public CloseableIterator<Term> termsIterator() throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	
 	public CloseableIterator<Term> termsIterator(Type type) throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
-	
-	
-	
 
-	
 	public void close() {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
 
-	
 }
-

@@ -63,7 +63,7 @@ import fr.lirmm.graphik.util.stream.CloseableIterator;
  * @author Clément Sipieter (INRIA) {@literal <clement@6pi.fr>}
  *
  */
-public abstract class  KeyValueStore implements Store {
+public abstract class KeyValueStore implements Store {
 	
 
 	public boolean contains(Atom atom) throws AtomSetException {
