@@ -5,7 +5,7 @@
   <class id="1" language="java" name="fr.lirmm.graphik.graal.keyval.KeyValueStoreMongoDB" project="graal-keyval" 
     file="/graal-keyval/src/main/java/fr/lirmm/graphik/graal/keyval/KeyValueStoreMongoDB.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="531" width="260" x="1582" y="381"/>    
+    <position height="531" width="260" x="1249" y="644"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -15,7 +15,7 @@
   <class id="2" language="java" name="fr.lirmm.graphik.graal.keyval.PathQueryBackwardChainer" project="graal-keyval" 
     file="/graal-keyval/src/main/java/fr/lirmm/graphik/graal/keyval/PathQueryBackwardChainer.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="320" y="-94"/>    
+    <position height="171" width="186" x="1077" y="37"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -25,7 +25,7 @@
   <class id="3" language="java" name="fr.lirmm.graphik.graal.keyval.RuleParser" project="graal-keyval" 
     file="/graal-keyval/src/main/java/fr/lirmm/graphik/graal/keyval/RuleParser.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="97" y="532"/>    
+    <position height="81" width="131" x="212" y="37"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -34,7 +34,7 @@
   </class>  
   <class id="4" language="java" name="fr.lirmm.graphik.graal.keyval.PathAtom" project="graal-keyval" 
     file="/graal-keyval/src/main/java/fr/lirmm/graphik/graal/keyval/PathAtom.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="133" y="765"/>    
+    <position height="261" width="185" x="2175" y="37"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -43,7 +43,7 @@
   </class>  
   <class id="5" language="java" name="fr.lirmm.graphik.graal.keyval.PathQuery" project="graal-keyval" 
     file="/graal-keyval/src/main/java/fr/lirmm/graphik/graal/keyval/PathQuery.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="362" y="832"/>    
+    <position height="117" width="165" x="872" y="37"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -53,7 +53,7 @@
   <class id="6" language="java" name="fr.lirmm.graphik.graal.keyval.GraphOfNORLRuleDependencies" project="graal-keyval" 
     file="/graal-keyval/src/main/java/fr/lirmm/graphik/graal/keyval/GraphOfNORLRuleDependencies.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="599" y="-175"/>    
+    <position height="99" width="308" x="383" y="644"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -63,7 +63,7 @@
   <class id="7" language="java" name="fr.lirmm.graphik.graal.keyval.KeyValueStore" project="graal-keyval" 
     file="/graal-keyval/src/main/java/fr/lirmm/graphik/graal/keyval/KeyValueStore.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="169" y="231"/>    
+    <position height="423" width="260" x="1399" y="37"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -73,7 +73,7 @@
   <class id="8" language="java" name="fr.lirmm.graphik.graal.keyval.PathPredicate" project="graal-keyval" 
     file="/graal-keyval/src/main/java/fr/lirmm/graphik/graal/keyval/PathPredicate.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="356" y="553"/>    
+    <position height="207" width="205" x="2053" y="644"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -82,7 +82,7 @@
   </class>  
   <class id="9" language="java" name="fr.lirmm.graphik.graal.keyval.NoRule" project="graal-keyval" 
     file="/graal-keyval/src/main/java/fr/lirmm/graphik/graal/keyval/NoRule.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="261" width="165" x="1882" y="-82"/>    
+    <position height="261" width="165" x="1849" y="37"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -92,7 +92,7 @@
   <class id="10" language="java" name="fr.lirmm.graphik.graal.keyval.QueryKeyValueStore" project="graal-keyval" 
     file="/graal-keyval/src/main/java/fr/lirmm/graphik/graal/keyval/QueryKeyValueStore.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="135" width="254" x="2087" y="-82"/>    
+    <position height="135" width="254" x="89" y="644"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -102,7 +102,7 @@
   <class id="11" language="java" name="fr.lirmm.graphik.graal.keyval.PathQueryParser" project="graal-keyval" 
     file="/graal-keyval/src/main/java/fr/lirmm/graphik/graal/keyval/PathQueryParser.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1625" y="221"/>    
+    <position height="81" width="131" x="41" y="37"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -112,7 +112,7 @@
   <class id="12" language="java" name="fr.lirmm.graphik.graal.api.core.Predicate" project="graal-keyval" 
     file="C:/Users/thecoon/.m2/repository/fr/lirmm/graphik/graal-api/1.1.1/graal-api-1.1.1.jar" binary="true" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="831" y="610"/>    
+    <position height="297" width="165" x="2053" y="1215"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -122,7 +122,7 @@
   <interface id="13" language="java" name="fr.lirmm.graphik.graal.api.core.Atom" project="graal-keyval" 
     file="C:/Users/thecoon/.m2/repository/fr/lirmm/graphik/graal-api/1.1.1/graal-api-1.1.1.jar" binary="true" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1153" y="756"/>    
+    <position height="189" width="185" x="2298" y="644"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -132,7 +132,7 @@
   <interface id="14" language="java" name="fr.lirmm.graphik.util.stream.GIterator" project="graal-keyval" 
     file="C:/Users/thecoon/.m2/repository/fr/lirmm/graphik/graal-util/1.1.1/graal-util-1.1.1.jar" binary="true" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="760" y="-46"/>    
+    <position height="99" width="123" x="1086" y="644"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -142,7 +142,7 @@
   <interface id="15" language="java" name="fr.lirmm.graphik.util.Profilable" project="graal-keyval" 
     file="C:/Users/thecoon/.m2/repository/fr/lirmm/graphik/graal-util/1.1.1/graal-util-1.1.1.jar" binary="true" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="557" y="15"/>    
+    <position height="99" width="140" x="906" y="644"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -152,7 +152,7 @@
   <interface id="16" language="java" name="fr.lirmm.graphik.graal.api.core.Query" project="graal-keyval" 
     file="C:/Users/thecoon/.m2/repository/fr/lirmm/graphik/graal-api/1.1.1/graal-api-1.1.1.jar" binary="true" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="826" y="841"/>    
+    <position height="81" width="135" x="731" y="644"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -162,7 +162,7 @@
   <class id="17" language="java" name="fr.lirmm.graphik.graal.grd.GraphOfRuleDependencies" project="graal-keyval" 
     file="C:/Users/thecoon/.m2/repository/fr/lirmm/graphik/graal-core/1.1.1/graal-core-1.1.1.jar" binary="true" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1229" y="47"/>    
+    <position height="567" width="449" x="383" y="37"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -172,7 +172,7 @@
   <interface id="18" language="java" name="fr.lirmm.graphik.graal.api.store.Store" project="graal-keyval" 
     file="C:/Users/thecoon/.m2/repository/fr/lirmm/graphik/graal-api/1.1.1/graal-api-1.1.1.jar" binary="true" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="805" y="119"/>    
+    <position height="153" width="260" x="1549" y="644"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -182,7 +182,7 @@
   <interface id="19" language="java" name="fr.lirmm.graphik.graal.api.core.Rule" project="graal-keyval" 
     file="C:/Users/thecoon/.m2/repository/fr/lirmm/graphik/graal-api/1.1.1/graal-api-1.1.1.jar" binary="true" 
     corner="BOTTOM_RIGHT">    
-    <position height="207" width="164" x="1535" y="-130"/>    
+    <position height="207" width="164" x="1849" y="644"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -192,7 +192,7 @@
   <interface id="20" language="java" name="fr.lirmm.graphik.graal.api.homomorphism.Homomorphism" project="graal-keyval" 
     file="C:/Users/thecoon/.m2/repository/fr/lirmm/graphik/graal-api/1.1.1/graal-api-1.1.1.jar" binary="true" 
     corner="BOTTOM_RIGHT">    
-    <position height="81" width="254" x="1970" y="-190"/>    
+    <position height="81" width="254" x="498" y="1215"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
