@@ -5,7 +5,7 @@
   <class id="1" language="java" name="fr.lirmm.graphik.graal.keyval.KeyValueStoreMongoDB" project="graal-keyval" 
     file="/graal-keyval/src/main/java/fr/lirmm/graphik/graal/keyval/KeyValueStoreMongoDB.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="531" width="260" x="220" y="1408"/>    
+    <position height="531" width="260" x="670" y="1408"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -43,7 +43,7 @@
   </class>  
   <class id="5" language="java" name="fr.lirmm.graphik.graal.keyval.PathQuery" project="graal-keyval" 
     file="/graal-keyval/src/main/java/fr/lirmm/graphik/graal/keyval/PathQuery.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="117" width="177" x="921" y="1408"/>    
+    <position height="117" width="177" x="970" y="1408"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -73,7 +73,7 @@
   <class id="8" language="java" name="fr.lirmm.graphik.graal.keyval.PathPredicate" project="graal-keyval" 
     file="/graal-keyval/src/main/java/fr/lirmm/graphik/graal/keyval/PathPredicate.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="207" width="205" x="1138" y="1408"/>    
+    <position height="207" width="205" x="1187" y="1408"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -102,7 +102,7 @@
   <class id="11" language="java" name="fr.lirmm.graphik.graal.keyval.PathQueryParser" project="graal-keyval" 
     file="/graal-keyval/src/main/java/fr/lirmm/graphik/graal/keyval/PathQueryParser.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="81" width="131" x="792" y="1979"/>    
+    <position height="81" width="131" x="841" y="1979"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -112,7 +112,7 @@
   <class id="12" language="java" name="fr.lirmm.graphik.graal.api.core.Predicate" project="graal-keyval" 
     file="C:/Users/thecoon/.m2/repository/fr/lirmm/graphik/graal-api/1.1.1/graal-api-1.1.1.jar" binary="true" 
     corner="BOTTOM_RIGHT">    
-    <position height="297" width="165" x="1138" y="1979"/>    
+    <position height="297" width="165" x="1187" y="1979"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -122,7 +122,7 @@
   <interface id="13" language="java" name="fr.lirmm.graphik.graal.api.core.Atom" project="graal-keyval" 
     file="C:/Users/thecoon/.m2/repository/fr/lirmm/graphik/graal-api/1.1.1/graal-api-1.1.1.jar" binary="true" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1451" y="1592"/>    
+    <position height="189" width="185" x="586" y="37"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -152,7 +152,7 @@
   <interface id="16" language="java" name="fr.lirmm.graphik.graal.api.core.Query" project="graal-keyval" 
     file="C:/Users/thecoon/.m2/repository/fr/lirmm/graphik/graal-api/1.1.1/graal-api-1.1.1.jar" binary="true" 
     corner="BOTTOM_RIGHT">    
-    <position height="81" width="135" x="963" y="1979"/>    
+    <position height="81" width="135" x="1012" y="1979"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -172,7 +172,7 @@
   <interface id="18" language="java" name="fr.lirmm.graphik.graal.api.store.Store" project="graal-keyval" 
     file="C:/Users/thecoon/.m2/repository/fr/lirmm/graphik/graal-api/1.1.1/graal-api-1.1.1.jar" binary="true" 
     corner="BOTTOM_RIGHT">    
-    <position height="153" width="260" x="520" y="1408"/>    
+    <position height="153" width="260" x="370" y="1408"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -192,7 +192,7 @@
   <interface id="20" language="java" name="fr.lirmm.graphik.graal.api.homomorphism.Homomorphism" project="graal-keyval" 
     file="C:/Users/thecoon/.m2/repository/fr/lirmm/graphik/graal-api/1.1.1/graal-api-1.1.1.jar" binary="true" 
     corner="BOTTOM_RIGHT">    
-    <position height="81" width="254" x="724" y="945"/>    
+    <position height="81" width="254" x="728" y="945"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -202,7 +202,7 @@
   <interface id="21" language="java" name="fr.lirmm.graphik.graal.api.core.Term" project="graal-keyval" 
     file="C:/Users/thecoon/.m2/repository/fr/lirmm/graphik/graal-api/1.1.1/graal-api-1.1.1.jar" binary="true" 
     corner="BOTTOM_RIGHT">    
-    <position height="135" width="135" x="1554" y="1408"/>    
+    <position height="135" width="135" x="1603" y="1408"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -222,193 +222,207 @@
   <interface id="23" language="java" name="fr.lirmm.graphik.graal.keyval.InterfacePathAtom" project="graal-keyval" 
     file="/graal-keyval/src/main/java/fr/lirmm/graphik/graal/keyval/InterfacePathAtom.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="63" width="131" x="1383" y="1408"/>    
+    <position height="63" width="131" x="1432" y="1408"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <association id="24">    
+  <class id="24" language="java" name="fr.lirmm.graphik.graal.keyval.KeyValueStoreCouchDB" project="graal-keyval" 
+    file="/graal-keyval/src/main/java/fr/lirmm/graphik/graal/keyval/KeyValueStoreCouchDB.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="81" width="159" x="171" y="1408"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="25">    
     <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="25" name="head"/>      
-      <multiplicity id="26" minimum="0" maximum="1"/>    
+      <attribute id="26" name="head"/>      
+      <multiplicity id="27" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="27">    
+  <realization id="28">    
     <end type="SOURCE" refId="4"/>    
     <end type="TARGET" refId="23"/>  
   </realization>  
-  <realization id="28">    
+  <realization id="29">    
     <end type="SOURCE" refId="2"/>    
     <end type="TARGET" refId="14"/>  
   </realization>  
-  <association id="29">    
+  <association id="30">    
     <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="30" name="TOP"/>      
-      <multiplicity id="31" minimum="0" maximum="1"/>    
+      <attribute id="31" name="TOP"/>      
+      <multiplicity id="32" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="12" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="32">    
+  <association id="33">    
     <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="33" name="KeyValStrSet"/>      
-      <multiplicity id="34" minimum="0" maximum="2147483647"/>    
+      <attribute id="34" name="KeyValStrSet"/>      
+      <multiplicity id="35" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="7" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="35">    
+  <generalization id="36">    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="7"/>  
+  </generalization>  
+  <association id="37">    
     <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="36" name="BOTTOM"/>      
-      <multiplicity id="37" minimum="0" maximum="1"/>    
+      <attribute id="38" name="BOTTOM"/>      
+      <multiplicity id="39" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="12" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="38">    
+  <association id="40">    
     <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="39" name="EQUALITY"/>      
-      <multiplicity id="40" minimum="0" maximum="1"/>    
+      <attribute id="41" name="EQUALITY"/>      
+      <multiplicity id="42" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="12" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="41">    
+  <association id="43">    
     <bendpoint x="1208" y="644"/>    
     <bendpoint x="1208" y="945"/>    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="42" name="query"/>      
-      <multiplicity id="43" minimum="0" maximum="1"/>    
+      <attribute id="44" name="query"/>      
+      <multiplicity id="45" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="44">    
+  <realization id="46">    
     <end type="SOURCE" refId="2"/>    
     <end type="TARGET" refId="15"/>  
   </realization>  
-  <association id="45">    
+  <association id="47">    
     <bendpoint x="379" y="644"/>    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="46" name="storeList"/>      
-      <multiplicity id="47" minimum="0" maximum="2147483647"/>    
+      <attribute id="48" name="storeList"/>      
+      <multiplicity id="49" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="7" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="48">    
+  <association id="50">    
     <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="49" name="parser"/>      
-      <multiplicity id="50" minimum="0" maximum="1"/>    
+      <attribute id="51" name="parser"/>      
+      <multiplicity id="52" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="11" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="51">    
+  <association id="53">    
     <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="52" name="predicatesList"/>      
-      <multiplicity id="53" minimum="0" maximum="2147483647"/>    
+      <attribute id="54" name="predicatesList"/>      
+      <multiplicity id="55" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="12" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="54">    
+  <association id="56">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="55" name="dataSum"/>      
-      <multiplicity id="56" minimum="0" maximum="1"/>    
+      <attribute id="57" name="dataSum"/>      
+      <multiplicity id="58" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="22" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="57">    
+  <realization id="59">    
     <end type="SOURCE" refId="7"/>    
     <end type="TARGET" refId="18"/>  
   </realization>  
-  <realization id="58">    
+  <realization id="60">    
     <end type="SOURCE" refId="9"/>    
     <end type="TARGET" refId="19"/>  
   </realization>  
-  <generalization id="59">    
+  <generalization id="61">    
     <end type="SOURCE" refId="6"/>    
     <end type="TARGET" refId="17"/>  
   </generalization>  
-  <association id="60">    
+  <association id="62">    
     <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="61" name="pathPredicat"/>      
-      <multiplicity id="62" minimum="0" maximum="1"/>    
+      <attribute id="63" name="pathPredicat"/>      
+      <multiplicity id="64" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="8" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="63">    
+  <association id="65">    
     <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="64" name="body"/>      
-      <multiplicity id="65" minimum="0" maximum="1"/>    
+      <attribute id="66" name="body"/>      
+      <multiplicity id="67" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="66">    
+  <realization id="68">    
     <end type="SOURCE" refId="5"/>    
     <end type="TARGET" refId="16"/>  
   </realization>  
-  <association id="67">    
+  <association id="69">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="68" name="NORuleSet"/>      
-      <multiplicity id="69" minimum="0" maximum="2147483647"/>    
+      <attribute id="70" name="NORuleSet"/>      
+      <multiplicity id="71" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="9" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="70">    
+  <generalization id="72">    
     <end type="SOURCE" refId="5"/>    
     <end type="TARGET" refId="4"/>  
   </generalization>  
-  <realization id="71">    
+  <realization id="73">    
     <end type="SOURCE" refId="10"/>    
     <end type="TARGET" refId="20"/>  
   </realization>  
-  <generalization id="72">    
+  <generalization id="74">    
     <end type="SOURCE" refId="1"/>    
     <end type="TARGET" refId="7"/>  
   </generalization>  
-  <association id="73">    
+  <association id="75">    
     <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="74" name="term"/>      
-      <multiplicity id="75" minimum="0" maximum="1"/>    
+      <attribute id="76" name="term"/>      
+      <multiplicity id="77" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="21" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="76">    
-    <bendpoint x="674" y="945"/>    
+  <association id="78">    
+    <bendpoint x="697" y="945"/>    
     <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="77" name="query"/>      
-      <multiplicity id="78" minimum="0" maximum="1"/>    
+      <attribute id="79" name="query"/>      
+      <multiplicity id="80" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="79">    
+  <generalization id="81">    
     <end type="SOURCE" refId="20"/>    
     <end type="TARGET" refId="15"/>  
   </generalization>  
-  <association id="80">    
+  <association id="82">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="81" name="graphOfRuleDependencies"/>      
-      <multiplicity id="82" minimum="0" maximum="1"/>    
+      <attribute id="83" name="graphOfRuleDependencies"/>      
+      <multiplicity id="84" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="83">    
+  <association id="85">    
     <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="84" name="parser"/>      
-      <multiplicity id="85" minimum="0" maximum="1"/>    
+      <attribute id="86" name="parser"/>      
+      <multiplicity id="87" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
