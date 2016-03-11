@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import fr.lirmm.graphik.graal.api.core.Predicate;
+import fr.lirmm.graphik.graal.api.core.Term;
+import fr.lirmm.graphik.graal.api.core.Term.Type;
+
 //Cette classe transforme une requete PathQuery en JSONObject
 //et une regle NoRule en JSONObject
 public class ParserJavaToJson extends Parser{
@@ -14,10 +18,14 @@ public class ParserJavaToJson extends Parser{
 	public Object parseQuery(Object obj) {
 		PathQuery pthQuery = (PathQuery) obj;
 		
-		ArrayList<String> listKeys = pthQuery.getPathPredicate().getKeys();
-		String labelTerm = pthQuery.getTerm().getLabel();
+		ArrayList<Predicate> listPreds = pthQuery.getPathPredicate().getPredicates();
+		ArrayList<String> listKeys = new ArrayList<String>();
+		for(Predicate pred : listPreds){
+			listKeys.add((String) pred.getIdentifier());
+		}
+		 Term term = pthQuery.getTerm();
 		
-		JSONObject queryJson = constructJson(new JSONObject(), listKeys, listKeys.size(), labelTerm);
+		JSONObject queryJson = constructJson(new JSONObject(), listKeys, listKeys.size(), term);
 		
 		return queryJson;
 	}
@@ -27,16 +35,26 @@ public class ParserJavaToJson extends Parser{
 	public Object parseRule(Object obj) {
 		NoRule noRule = (NoRule) obj;
 		
-		PathAtom premisse = noRule.getPremisse();
-		ArrayList<String> listKeys1 = premisse.getPathPredicate().getKeys();
-		String labelTerm1 = premisse.getTerm().getLabel();
+		PathAtom premisse = noRule.getPremisse();		
+		ArrayList<Predicate> listPreds1 = premisse.getPathPredicate().getPredicates();
+		ArrayList<String> listKeys1 = new ArrayList<String>();
+		for(Predicate pred : listPreds1){
+			listKeys1.add((String) pred.getIdentifier());
+		}
 		
-		PathAtom conclusion = noRule.getConclusion();
-		ArrayList<String> listKeys2 = conclusion.getPathPredicate().getKeys();
-		String labelTerm2 = conclusion.getTerm().getLabel();
+		Term term1 = premisse.getTerm();
 		
-		JSONObject bodyJson = constructJson(new JSONObject(), listKeys1, listKeys1.size(), labelTerm1); 
-		JSONObject headJson = constructJson(new JSONObject(), listKeys2, listKeys2.size(), labelTerm2);
+		PathAtom conclusion = noRule.getConclusion();		
+		ArrayList<Predicate> listPreds2 = conclusion.getPathPredicate().getPredicates();
+		ArrayList<String> listKeys2 = new ArrayList<String>();
+		for(Predicate pred : listPreds2){
+			listKeys2.add((String) pred.getIdentifier());
+		}
+		
+		Term term2 = conclusion.getTerm();
+		
+		JSONObject bodyJson = constructJson(new JSONObject(), listKeys1, listKeys1.size(), term1); 
+		JSONObject headJson = constructJson(new JSONObject(), listKeys2, listKeys2.size(), term2);
 		
 		JSONObject ruleJson = new JSONObject();
 		try {
@@ -51,10 +69,15 @@ public class ParserJavaToJson extends Parser{
 	}
 
 	
-	private JSONObject constructJson(JSONObject json, ArrayList<String> listKeys, int nbKeys, String term){
+	private JSONObject constructJson(JSONObject json, ArrayList<String> listKeys, int nbKeys, Term term){
 		if(listKeys.size() == nbKeys){
 			try {
-				json.put(listKeys.get(nbKeys - 1), "?" + term);
+				if(term.getType().equals(Type.VARIABLE)){
+					json.put(listKeys.get(nbKeys - 1), "?" + term.getLabel());
+				}
+				else{
+					json.put(listKeys.get(nbKeys - 1), term.getLabel());
+				}
 				ArrayList<String> listKeys2 = new ArrayList<String>();
 				for(int i = 0; i < listKeys.size() - 1; i++){
 					listKeys2.add(listKeys.get(i));

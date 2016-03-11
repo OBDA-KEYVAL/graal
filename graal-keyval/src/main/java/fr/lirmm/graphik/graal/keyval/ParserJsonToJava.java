@@ -1,12 +1,11 @@
 package fr.lirmm.graphik.graal.keyval;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import fr.lirmm.graphik.graal.api.core.Predicate;
 import fr.lirmm.graphik.graal.api.core.Term.Type;
 
 
@@ -32,7 +31,13 @@ public class ParserJsonToJava extends Parser {
 			listKey.add(tempKey);
 			try {
 				if(tempJs.get(tempKey) instanceof String){
-					term = new MyTerm(tempJs.get(tempKey).toString().substring(1), Type.VARIABLE);
+					String tmpLabel = tempJs.get(tempKey).toString();
+					if(tmpLabel.contains("?")){
+						term = new MyTerm(tmpLabel.substring(1), Type.VARIABLE);
+					}
+					else{
+						term = new MyTerm(tmpLabel, Type.CONSTANT);
+					}
 					break;
 				}
 				else{
@@ -44,7 +49,10 @@ public class ParserJsonToJava extends Parser {
 			}
 		}
 		
-		pthPred = new PathPredicate(listKey);
+		pthPred = new PathPredicate();
+		for(String str : listKey){
+			pthPred.addPredicate(new Predicate(str, 1));
+		}
 		pthQuery = new PathQuery(pthPred, term);
 		
 		return pthQuery;
@@ -57,13 +65,11 @@ public class ParserJsonToJava extends Parser {
 		
 		ArrayList<String> listKey1 = new ArrayList<String>();
 		PathPredicate pthPred1 = null;
-		String label1 = null;
 		MyTerm term1 = null;
 		PathAtom pthAtom1 = null;
 		
 		ArrayList<String> listKey2 = new ArrayList<String>();
 		PathPredicate pthPred2 = null;
-		String label2 = null;
 		MyTerm term2 = null;
 		PathAtom pthAtom2 = null;
 		
@@ -82,11 +88,10 @@ public class ParserJsonToJava extends Parser {
 		String tempKey;
 		
 		ArrayList<String> tempListKey;
-		String tempLabel;
+		MyTerm tempTerm;
 	
 		for(int i = 0; i < 2; i++){
 			tempListKey = new ArrayList<String>();
-			tempLabel = "";
 			if(i == 1){
 				tempJs = tempH;
 			}
@@ -98,14 +103,21 @@ public class ParserJsonToJava extends Parser {
 				tempListKey.add(tempKey);
 				try {
 					if(tempJs.get(tempKey) instanceof String){
-						tempLabel = tempJs.get(tempKey).toString().substring(1);
+						String tmpLabel = tempJs.get(tempKey).toString();
+						if(tmpLabel.contains("?")){
+							tempTerm = new MyTerm(tmpLabel.substring(1), Type.VARIABLE);
+						}
+						else{
+							tempTerm = new MyTerm(tmpLabel, Type.CONSTANT);
+						}
+						
 						if(i == 1){
 							listKey2 = tempListKey;
-							label2 = tempLabel;
+							term2 = tempTerm;
 						}
 						else{
 							listKey1 = tempListKey;
-							label1 = tempLabel;
+							term1 = tempTerm;
 						}
 						break;
 					}
@@ -119,12 +131,16 @@ public class ParserJsonToJava extends Parser {
 			}
 		}
 		
-		pthPred1 = new PathPredicate(listKey1);
-		term1 = new MyTerm(label1, Type.VARIABLE);
+		pthPred1 = new PathPredicate();
+		for(String str : listKey1){
+			pthPred1.addPredicate(new Predicate(str, 1));
+		}
 		pthAtom1 = new PathQuery(pthPred1, term1);
 		
-		pthPred2 = new PathPredicate(listKey2);
-		term2 = new MyTerm(label2, Type.VARIABLE);
+		pthPred2 = new PathPredicate();
+		for(String str : listKey2){
+			pthPred2.addPredicate(new Predicate(str, 1));
+		}
 		pthAtom2 = new PathQuery(pthPred2, term2);
 		
 		rule = new NoRule(pthAtom1, pthAtom2);
