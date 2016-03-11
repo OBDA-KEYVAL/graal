@@ -42,11 +42,26 @@
  */
 package fr.lirmm.graphik.graal.keyval;
 
+import org.json.JSONObject;
+
 /**
  * @author Clément Sipieter (INRIA) {@literal <clement@6pi.fr>}
  *
  */
 public class PathQueryParser {
-
-
+	private Parser mPJsonToJava;
+	private Parser mPJavaToJson;
+	
+	public PathQueryParser(){
+		this.mPJavaToJson = new ParserJavaToJson();
+		this.mPJsonToJava = new ParserJsonToJava();
+	}
+	
+	public JSONObject getJsonQuery(PathQuery pathQuery){
+		return (JSONObject) mPJavaToJson.parseQuery(pathQuery);
+	}
+	
+	public PathQuery getJavaQuery(JSONObject jsonQuery){
+		return (PathQuery) mPJsonToJava.parseQuery(jsonQuery);
+	}
 }

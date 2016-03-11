@@ -42,11 +42,26 @@
  */
 package fr.lirmm.graphik.graal.keyval;
 
+import org.json.JSONObject;
+
 /**
  * @author Clément Sipieter (INRIA) {@literal <clement@6pi.fr>}
  *
  */
 public class RuleParser {
-
-
+	private Parser mPJsonToJava;
+	private Parser mPJavaToJson;
+	
+	public RuleParser(){
+		this.mPJavaToJson = new ParserJavaToJson();
+		this.mPJsonToJava = new ParserJsonToJava();
+	}
+	
+	public JSONObject getJsonRule(NoRule rule){
+		return (JSONObject) mPJavaToJson.parseRule(rule);
+	}
+	
+	public NoRule getJavaRule(JSONObject jsonRule){
+		return (NoRule) mPJsonToJava.parseRule(jsonRule);
+	}
 }
