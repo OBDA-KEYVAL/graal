@@ -43,15 +43,23 @@
 package fr.lirmm.graphik.graal.keyval;
 
 import fr.lirmm.graphik.graal.api.core.Query;
+import fr.lirmm.graphik.graal.api.core.Term;
 import fr.lirmm.graphik.util.MethodNotImplementedError;
 
 /**
  * @author Clément Sipieter (INRIA) {@literal <clement@6pi.fr>}
  *
  */
-public class PathQuery implements Query {
+public class PathQuery extends PathAtom implements Query {
 
+	private PathQueryParser parser;
 	
+	public PathQuery(PathPredicate pp, Term tr) {
+		super(pp, tr);
+		// TODO Auto-generated constructor stub
+	}
+
+
 	public void appendTo(StringBuilder sb) {
 		// TODO implement this method
 		throw new MethodNotImplementedError();

@@ -55,7 +55,9 @@ import fr.lirmm.graphik.util.MethodNotImplementedError;
  *
  */
 public class NoRule implements Rule {
-
+	private PathAtom body;
+	private PathAtom head;
+	private RuleParser parser;
 	
 	public int compareTo(Rule o) {
 		// TODO implement this method

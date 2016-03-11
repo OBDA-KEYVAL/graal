@@ -42,6 +42,10 @@
  */
 package fr.lirmm.graphik.graal.keyval;
 
+
+import java.util.List;
+import java.util.Set;
+
 import fr.lirmm.graphik.util.MethodNotImplementedError;
 import fr.lirmm.graphik.util.Profilable;
 import fr.lirmm.graphik.util.Profiler;
@@ -52,7 +56,12 @@ import fr.lirmm.graphik.util.stream.GIterator;
  *
  */
 public class PathQueryBackwardChainer implements GIterator<PathQuery>, Profilable {
-
+	
+	private List<KeyValueStore> storeList;
+	private PathQuery query;
+	private Set<NoRule> NORuleSet;
+	private GraphOfNORLRuleDependencies graphOfRuleDependencies;
+	private DataSummary dataSum;
 	
 	public void remove() {
 		// TODO implement this method

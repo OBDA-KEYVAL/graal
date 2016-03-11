@@ -43,34 +43,66 @@
 package fr.lirmm.graphik.graal.keyval;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Set;
+
+import fr.lirmm.graphik.graal.api.core.Predicate;
 
 import javax.sql.RowSet;
-import javax.sql.rowset.Predicate;
 
 import fr.lirmm.graphik.util.MethodNotImplementedError;
 
 /**
  * @author Clément Sipieter (INRIA) {@literal <clement@6pi.fr>}
- *
+ *	@author Barthélémy Antonin (UM) {@literal <antonin.barthelemy@etu.umontpellier.fr}
+ *	
+ *	On choisie de ne pas interphaser l'objet sur javax.sql.rowSet.Predicat
  */
-public class PathPredicate implements Predicate {
+public class PathPredicate {
 
+	///////////////////////////
+	//	Attributs
+	///////////////////////////
+	private ArrayList<Predicate> predicatesList ;
+	private Integer pathSize;
 	
-	public boolean evaluate(RowSet arg0) {
-		// TODO implement this method
-		throw new MethodNotImplementedError();
+	//////////////////////////
+	//	Methodes
+	//////////////////////////
+	public PathPredicate(){
+		pathSize = 0;
+		predicatesList = new ArrayList<Predicate>();
 	}
-
 	
-	public boolean evaluate(Object arg0, int arg1) throws SQLException {
-		// TODO implement this method
-		throw new MethodNotImplementedError();
+	public PathPredicate(ArrayList<Predicate> arrPredicates){
+		predicatesList = arrPredicates;
+		pathSize = arrPredicates.size();
 	}
-
 	
-	public boolean evaluate(Object arg0, String arg1) throws SQLException {
-		// TODO implement this method
-		throw new MethodNotImplementedError();
+	public void addPredicate(Predicate predicate){
+		predicatesList.add(predicate);
+		pathSize++;
 	}
+	
+	public Integer getSizePath(){
+		return pathSize;
+	}
+	
+	public ArrayList<Predicate> getPredicates() {
+		return predicatesList;
+	}
+	
+	public Predicate getPredicateIndex(Integer i){
+		if(i>=pathSize)
+			return null;
+		else
+			return predicatesList.get(i);
+	}
+	
+	public String toString(){
+		return predicatesList+":"+pathSize;
+	}
+	
+	
 
 }
