@@ -59,6 +59,11 @@ public class NoRule implements Rule {
 	private PathAtom head;
 	private RuleParser parser;
 	
+	public NoRule(PathAtom pthAtom1, PathAtom pthAtom2) {
+		// TODO Auto-generated constructor stub
+	}
+
+
 	public int compareTo(Rule o) {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
@@ -117,6 +122,19 @@ public class NoRule implements Rule {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
+
+
+	public PathAtom getPremisse() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public PathAtom getConclusion() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 }

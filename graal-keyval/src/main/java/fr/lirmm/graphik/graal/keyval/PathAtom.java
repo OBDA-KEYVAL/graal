@@ -119,4 +119,9 @@ public class PathAtom implements InterfacePathAtom{
 		throw new MethodNotImplementedError();
 	}
 
+	public PathPredicate getPathPredicate() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

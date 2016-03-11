@@ -71,4 +71,10 @@ public class PathQuery extends PathAtom implements Query {
 		throw new MethodNotImplementedError();
 	}
 
+
+	public Term getTerm() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

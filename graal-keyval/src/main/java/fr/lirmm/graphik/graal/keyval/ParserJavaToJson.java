@@ -42,7 +42,7 @@ public class ParserJavaToJson extends Parser{
 			listKeys1.add((String) pred.getIdentifier());
 		}
 		
-		Term term1 = premisse.getTerm();
+		Term term1 = premisse.getTerm(0);
 		
 		PathAtom conclusion = noRule.getConclusion();		
 		ArrayList<Predicate> listPreds2 = conclusion.getPathPredicate().getPredicates();
@@ -51,7 +51,7 @@ public class ParserJavaToJson extends Parser{
 			listKeys2.add((String) pred.getIdentifier());
 		}
 		
-		Term term2 = conclusion.getTerm();
+		Term term2 = conclusion.getTerm(0);
 		
 		JSONObject bodyJson = constructJson(new JSONObject(), listKeys1, listKeys1.size(), term1); 
 		JSONObject headJson = constructJson(new JSONObject(), listKeys2, listKeys2.size(), term2);
