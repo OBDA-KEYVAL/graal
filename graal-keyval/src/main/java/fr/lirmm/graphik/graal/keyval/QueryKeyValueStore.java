@@ -57,7 +57,7 @@ import fr.lirmm.graphik.util.stream.CloseableIterator;
  */
 public class QueryKeyValueStore implements Homomorphism<PathQuery, KeyValueStore> {
 
-	private PathQuery query;
+	private Set<PathQuery> query;
 	private Set<KeyValueStore> KeyValStrSet;
 	
 	public void setProfiler(Profiler profiler) {
