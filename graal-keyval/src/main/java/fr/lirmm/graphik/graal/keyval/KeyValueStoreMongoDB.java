@@ -106,18 +106,7 @@ public class KeyValueStoreMongoDB extends KeyValueStore {
 	}
 
 	public void importJsonIntoCollection(String collname, String jsonFile) throws IOException {
-
-		MongoCollection<Document> collection = this.db.getCollection(collname); // initialize
-																				// to
-																				// the
-																				// collection
-																				// to
-																				// which
-																				// you
-																				// want
-																				// to
-																				// write
-
+		MongoCollection<Document> collection = this.db.getCollection(collname);
 		BufferedReader reader = new BufferedReader(new FileReader(jsonFile));
 		try {
 			String json;
