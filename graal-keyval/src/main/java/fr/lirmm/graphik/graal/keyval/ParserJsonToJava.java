@@ -20,7 +20,7 @@ public class ParserJsonToJava extends Parser {
 		
 		ArrayList<String> listKey = new ArrayList<String>();
 		PathPredicate pthPred = null;
-		KVTerm term = null;
+		KeyValueTerm term = null;
 		PathQuery pthQuery = null;
 		
 		JSONObject tempJs = queryJs;
@@ -33,10 +33,10 @@ public class ParserJsonToJava extends Parser {
 				if(tempJs.get(tempKey) instanceof String){
 					String tmpLabel = tempJs.get(tempKey).toString();
 					if(tmpLabel.contains("?")){
-						term = new KVTerm(tmpLabel.substring(1), Type.VARIABLE);
+						term = new KeyValueTerm(tmpLabel.substring(1), Type.VARIABLE);
 					}
 					else{
-						term = new KVTerm(tmpLabel, Type.CONSTANT);
+						term = new KeyValueTerm(tmpLabel, Type.CONSTANT);
 					}
 					break;
 				}
@@ -65,12 +65,12 @@ public class ParserJsonToJava extends Parser {
 		
 		ArrayList<String> listKey1 = new ArrayList<String>();
 		PathPredicate pthPred1 = null;
-		KVTerm term1 = null;
+		KeyValueTerm term1 = null;
 		PathAtom pthAtom1 = null;
 		
 		ArrayList<String> listKey2 = new ArrayList<String>();
 		PathPredicate pthPred2 = null;
-		KVTerm term2 = null;
+		KeyValueTerm term2 = null;
 		PathAtom pthAtom2 = null;
 		
 		NoRule rule = null;
@@ -88,7 +88,7 @@ public class ParserJsonToJava extends Parser {
 		String tempKey;
 		
 		ArrayList<String> tempListKey;
-		KVTerm tempTerm;
+		KeyValueTerm tempTerm;
 	
 		for(int i = 0; i < 2; i++){
 			tempListKey = new ArrayList<String>();
@@ -105,10 +105,10 @@ public class ParserJsonToJava extends Parser {
 					if(tempJs.get(tempKey) instanceof String){
 						String tmpLabel = tempJs.get(tempKey).toString();
 						if(tmpLabel.contains("?")){
-							tempTerm = new KVTerm(tmpLabel.substring(1), Type.VARIABLE);
+							tempTerm = new KeyValueTerm(tmpLabel.substring(1), Type.VARIABLE);
 						}
 						else{
-							tempTerm = new KVTerm(tmpLabel, Type.CONSTANT);
+							tempTerm = new KeyValueTerm(tmpLabel, Type.CONSTANT);
 						}
 						
 						if(i == 1){

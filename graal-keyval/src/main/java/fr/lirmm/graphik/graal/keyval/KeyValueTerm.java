@@ -2,12 +2,12 @@ package fr.lirmm.graphik.graal.keyval;
 
 import fr.lirmm.graphik.graal.api.core.AbstractTerm;
 
-public class KVTerm extends AbstractTerm {
+public class KeyValueTerm extends AbstractTerm {
 	
 	private String mLabel;
 	private Type mType;
 
-	public KVTerm(String label, Type type){
+	public KeyValueTerm(String label, Type type){
 		this.mLabel = label;
 		this.mType= type;
 	}

@@ -209,17 +209,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="22" language="java" name="fr.lirmm.graphik.graal.keyval.InterfacePathAtom" project="graal-keyval" 
-    file="/graal-keyval/src/main/java/fr/lirmm/graphik/graal/keyval/InterfacePathAtom.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="63" width="131" x="287" y="1228"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </interface>  
-  <class id="23" language="java" name="fr.lirmm.graphik.graal.keyval.KeyValueStoreCouchDB" project="graal-keyval" 
+  <class id="22" language="java" name="fr.lirmm.graphik.graal.keyval.KeyValueStoreCouchDB" project="graal-keyval" 
     file="/graal-keyval/src/main/java/fr/lirmm/graphik/graal/keyval/KeyValueStoreCouchDB.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="81" width="159" x="1223" y="1691"/>    
@@ -229,195 +219,191 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <association id="24">    
+  <association id="23">    
     <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="25" name="head"/>      
-      <multiplicity id="26" minimum="0" maximum="1"/>    
+      <attribute id="24" name="head"/>      
+      <multiplicity id="25" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="27">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="22"/>  
-  </realization>  
-  <realization id="28">    
+  <realization id="26">    
     <end type="SOURCE" refId="2"/>    
     <end type="TARGET" refId="13"/>  
   </realization>  
-  <association id="29">    
+  <association id="27">    
     <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="30" name="TOP"/>      
-      <multiplicity id="31" minimum="0" maximum="1"/>    
+      <attribute id="28" name="TOP"/>      
+      <multiplicity id="29" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="12" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="32">    
+  <association id="30">    
     <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="33" name="KeyValStrSet"/>      
-      <multiplicity id="34" minimum="0" maximum="2147483647"/>    
+      <attribute id="31" name="KeyValStrSet"/>      
+      <multiplicity id="32" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="7" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="35">    
-    <end type="SOURCE" refId="23"/>    
+  <generalization id="33">    
+    <end type="SOURCE" refId="22"/>    
     <end type="TARGET" refId="7"/>  
   </generalization>  
-  <association id="36">    
+  <association id="34">    
     <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="37" name="BOTTOM"/>      
-      <multiplicity id="38" minimum="0" maximum="1"/>    
+      <attribute id="35" name="BOTTOM"/>      
+      <multiplicity id="36" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="12" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="39">    
+  <realization id="37">    
     <end type="SOURCE" refId="21"/>    
     <end type="TARGET" refId="14"/>  
   </realization>  
-  <association id="40">    
+  <association id="38">    
     <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="41" name="EQUALITY"/>      
-      <multiplicity id="42" minimum="0" maximum="1"/>    
+      <attribute id="39" name="EQUALITY"/>      
+      <multiplicity id="40" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="12" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="43">    
+  <association id="41">    
     <bendpoint x="1211" y="644"/>    
     <bendpoint x="1211" y="945"/>    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="44" name="query"/>      
-      <multiplicity id="45" minimum="0" maximum="1"/>    
+      <attribute id="42" name="query"/>      
+      <multiplicity id="43" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="46">    
+  <realization id="44">    
     <bendpoint x="560" y="644"/>    
     <end type="SOURCE" refId="2"/>    
     <end type="TARGET" refId="14"/>  
   </realization>  
-  <association id="47">    
+  <association id="45">    
     <bendpoint x="1232" y="644"/>    
     <bendpoint x="1232" y="945"/>    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="48" name="storeList"/>      
-      <multiplicity id="49" minimum="0" maximum="2147483647"/>    
+      <attribute id="46" name="storeList"/>      
+      <multiplicity id="47" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="7" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="50">    
+  <association id="48">    
     <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="51" name="parser"/>      
-      <multiplicity id="52" minimum="0" maximum="1"/>    
+      <attribute id="49" name="parser"/>      
+      <multiplicity id="50" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="11" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="53">    
+  <association id="51">    
     <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="54" name="predicatesList"/>      
-      <multiplicity id="55" minimum="0" maximum="2147483647"/>    
+      <attribute id="52" name="predicatesList"/>      
+      <multiplicity id="53" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="12" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="56">    
+  <association id="54">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="57" name="dataSum"/>      
-      <multiplicity id="58" minimum="0" maximum="1"/>    
+      <attribute id="55" name="dataSum"/>      
+      <multiplicity id="56" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="21" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="59">    
+  <realization id="57">    
     <end type="SOURCE" refId="7"/>    
     <end type="TARGET" refId="17"/>  
   </realization>  
-  <realization id="60">    
+  <realization id="58">    
     <end type="SOURCE" refId="9"/>    
     <end type="TARGET" refId="18"/>  
   </realization>  
-  <generalization id="61">    
+  <generalization id="59">    
     <end type="SOURCE" refId="6"/>    
     <end type="TARGET" refId="16"/>  
   </generalization>  
-  <association id="62">    
+  <association id="60">    
     <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="63" name="pathPredicat"/>      
-      <multiplicity id="64" minimum="0" maximum="1"/>    
+      <attribute id="61" name="pathPredicat"/>      
+      <multiplicity id="62" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="8" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="65">    
+  <association id="63">    
     <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="66" name="body"/>      
-      <multiplicity id="67" minimum="0" maximum="1"/>    
+      <attribute id="64" name="body"/>      
+      <multiplicity id="65" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="68">    
+  <realization id="66">    
     <end type="SOURCE" refId="5"/>    
     <end type="TARGET" refId="15"/>  
   </realization>  
-  <association id="69">    
+  <association id="67">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="70" name="NORuleSet"/>      
-      <multiplicity id="71" minimum="0" maximum="2147483647"/>    
+      <attribute id="68" name="NORuleSet"/>      
+      <multiplicity id="69" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="9" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="72">    
+  <generalization id="70">    
     <end type="SOURCE" refId="5"/>    
     <end type="TARGET" refId="4"/>  
   </generalization>  
-  <realization id="73">    
+  <realization id="71">    
     <end type="SOURCE" refId="10"/>    
     <end type="TARGET" refId="19"/>  
   </realization>  
-  <generalization id="74">    
+  <generalization id="72">    
     <end type="SOURCE" refId="1"/>    
     <end type="TARGET" refId="7"/>  
   </generalization>  
-  <association id="75">    
+  <association id="73">    
     <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="76" name="term"/>      
-      <multiplicity id="77" minimum="0" maximum="1"/>    
+      <attribute id="74" name="term"/>      
+      <multiplicity id="75" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="20" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="78">    
+  <association id="76">    
     <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="79" name="query"/>      
-      <multiplicity id="80" minimum="0" maximum="1"/>    
+      <attribute id="77" name="query"/>      
+      <multiplicity id="78" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="81">    
+  <generalization id="79">    
     <end type="SOURCE" refId="19"/>    
     <end type="TARGET" refId="14"/>  
   </generalization>  
-  <association id="82">    
+  <association id="80">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="83" name="graphOfRuleDependencies"/>      
-      <multiplicity id="84" minimum="0" maximum="1"/>    
+      <attribute id="81" name="graphOfRuleDependencies"/>      
+      <multiplicity id="82" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="85">    
+  <association id="83">    
     <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="86" name="parser"/>      
-      <multiplicity id="87" minimum="0" maximum="1"/>    
+      <attribute id="84" name="parser"/>      
+      <multiplicity id="85" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
