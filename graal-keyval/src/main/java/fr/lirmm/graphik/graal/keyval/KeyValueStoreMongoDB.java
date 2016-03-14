@@ -57,9 +57,13 @@ import org.json.simple.parser.JSONParser;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
+import com.mongodb.client.ListCollectionsIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoIterable;
+
+import static com.mongodb.client.model.Filters.*;
 
 import fr.lirmm.graphik.graal.api.core.Atom;
 import fr.lirmm.graphik.graal.api.core.AtomSet;
@@ -79,12 +83,14 @@ public class KeyValueStoreMongoDB extends KeyValueStore {
 	private MongoClient client;
 	private MongoDatabase db;
 
-//	public static MongoDatabase connexionDB(String address, Integer port, String databaseName) throws ParseException {
-//		MongoClient mongoclient = new MongoClient(address, port);
-//		MongoDatabase mongdb = mongoclient.getDatabase(databaseName);
-//		System.out.println("Connect to \"" + databaseName + "\" succefully on " + address + "@" + port);
-//		return mongdb;
-//	}
+	// public static MongoDatabase connexionDB(String address, Integer port,
+	// String databaseName) throws ParseException {
+	// MongoClient mongoclient = new MongoClient(address, port);
+	// MongoDatabase mongdb = mongoclient.getDatabase(databaseName);
+	// System.out.println("Connect to \"" + databaseName + "\" succefully on " +
+	// address + "@" + port);
+	// return mongdb;
+	// }
 
 	public KeyValueStoreMongoDB() throws ParseException {
 		client = new MongoClient();
@@ -99,20 +105,28 @@ public class KeyValueStoreMongoDB extends KeyValueStore {
 		db = client.getDatabase(dbname);
 	}
 
-	public void importJsonIntoCollection(String collname,String jsonFile) throws IOException {
+	public void importJsonIntoCollection(String collname, String jsonFile) throws IOException {
 
-		MongoCollection<Document> collection = this.db.getCollection(collname);  // initialize to the collection to which you want to write
-
+		MongoCollection<Document> collection = this.db.getCollection(collname); // initialize
+																				// to
+																				// the
+																				// collection
+																				// to
+																				// which
+																				// you
+																				// want
+																				// to
+																				// write
 
 		BufferedReader reader = new BufferedReader(new FileReader(jsonFile));
 		try {
-		    String json;
+			String json;
 
-		    while ((json = reader.readLine()) != null) {
-		        collection.insertOne(Document.parse(json));
-		    } 
+			while ((json = reader.readLine()) != null) {
+				collection.insertOne(Document.parse(json));
+			}
 		} finally {
-		    reader.close();
+			reader.close();
 		}
 
 	}
@@ -125,9 +139,27 @@ public class KeyValueStoreMongoDB extends KeyValueStore {
 		}
 	}
 
-	public boolean contains(Atom atom) throws AtomSetException {
-		// TODO implement this method
-		throw new MethodNotImplementedError();
+	public boolean contains(Atom pathAtom) throws AtomSetException {
+		// On initialise nos variable
+		Boolean result = false;
+		ListCollectionsIterable<Document> listColl = db.listCollections();
+		MongoCursor<Document> itrCol = listColl.iterator();
+
+		// On itére sur les collection de la DB
+		while (itrCol.hasNext() && !result) {
+
+			// On test si la pathAtome posséde un homomorphisme dans la
+			// collection
+			if (containsInCollection(pathAtom, itrCol.next())) {
+				result = true;
+			}
+		}
+		return result;
+	}
+
+	public boolean containsInCollection(Atom pathAtom, Document doc) {
+
+		return true;
 	}
 
 	public Set<Predicate> getPredicates() throws AtomSetException {
