@@ -82,16 +82,8 @@ public class KeyValueStoreMongoDB extends KeyValueStore {
 
 	private MongoClient client;
 	private MongoDatabase db;
-
-	// public static MongoDatabase connexionDB(String address, Integer port,
-	// String databaseName) throws ParseException {
-	// MongoClient mongoclient = new MongoClient(address, port);
-	// MongoDatabase mongdb = mongoclient.getDatabase(databaseName);
-	// System.out.println("Connect to \"" + databaseName + "\" succefully on " +
-	// address + "@" + port);
-	// return mongdb;
-	// }
-
+	private MongoCollection<Document> currentCollection;
+	
 	public KeyValueStoreMongoDB() throws ParseException {
 		client = new MongoClient();
 	}
@@ -103,6 +95,12 @@ public class KeyValueStoreMongoDB extends KeyValueStore {
 	public KeyValueStoreMongoDB(String add, Integer port, String dbname) throws ParseException {
 		client = new MongoClient(add, port);
 		db = client.getDatabase(dbname);
+	}
+	
+	public KeyValueStoreMongoDB(String add,Integer port,String dbname,String colname) throws ParseException{
+		client = new MongoClient(add,port);
+		db = client.getDatabase(dbname);
+		currentCollection = db.getCollection(colname);
 	}
 	
 	// Import dans la collection choisie un fichier JSON qui ce doit d'être minifié.
@@ -132,7 +130,7 @@ public class KeyValueStoreMongoDB extends KeyValueStore {
 	public void showCollectionsDeeper(){
 		MongoCursor<Document> itrCol = db.listCollections().iterator();
 		while(itrCol.hasNext()){
-			System.out.println(itrCol.next().getString("name"));
+			System.out.println(itrCol.next().toJson());
 		}
 	}
 
@@ -171,6 +169,87 @@ public class KeyValueStoreMongoDB extends KeyValueStore {
 		return docResult==null?false:true;
 	}
 
+	public boolean isEmpty() throws AtomSetException {
+		return db.listCollectionNames().first().isEmpty();
+	}
+	public boolean add(PathAtom atom) throws AtomSetException {
+		if(currentCollection == null){
+			throw new Error("Aucune collection n'est pointé");
+		}
+		return true;
+		
+	}
+	public boolean addAll(Iterator<? extends Atom> atoms) throws AtomSetException {
+		// TODO implement this method
+		throw new MethodNotImplementedError();
+	}
+	
+	public boolean addAll(AtomSet atoms) throws AtomSetException {
+		// TODO implement this method
+		throw new MethodNotImplementedError();
+	}
+	
+	public boolean remove(Atom atom) throws AtomSetException {
+		// TODO implement this method
+		throw new MethodNotImplementedError();
+	}
+	
+	public boolean removeAll(Iterator<? extends Atom> atoms) throws AtomSetException {
+		// TODO implement this method
+		throw new MethodNotImplementedError();
+	}
+	
+	public boolean removeAll(AtomSet atoms) throws AtomSetException {
+		// TODO implement this method
+		throw new MethodNotImplementedError();
+	}
+	
+	public void clear() throws AtomSetException {
+		// TODO implement this method
+		throw new MethodNotImplementedError();
+	}
+	
+	public CloseableIterator<Atom> iterator() {
+		// TODO implement this method
+		throw new MethodNotImplementedError();
+	}
+	
+	public CloseableIterator<Atom> match(Atom atom) throws AtomSetException {
+		// TODO implement this method
+		throw new MethodNotImplementedError();
+	}
+	
+	public CloseableIterator<Predicate> predicatesIterator() throws AtomSetException {
+		// TODO implement this method
+		throw new MethodNotImplementedError();
+	}
+	
+	public CloseableIterator<Term> termsIterator() throws AtomSetException {
+		// TODO implement this method
+		throw new MethodNotImplementedError();
+	}
+	
+	public CloseableIterator<Term> termsIterator(Type type) throws AtomSetException {
+		// TODO implement this method
+		throw new MethodNotImplementedError();
+	}
+	
+	public void close() {
+		// TODO implement this method
+		throw new MethodNotImplementedError();
+	}
+	
+	public MongoCollection<Document> getCurrentCollection() {
+		return currentCollection;
+	}
+
+	public void setCurrentCollection(String colname) {
+		this.currentCollection = db.getCollection(colname);
+	}
+
+	////////////////////////////////////
+	// Not implemented methodes
+	////////////////////////////////////
 	public Set<Predicate> getPredicates() throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
@@ -191,74 +270,6 @@ public class KeyValueStoreMongoDB extends KeyValueStore {
 		throw new MethodNotImplementedError();
 	}
 
-	public boolean isEmpty() throws AtomSetException {
-		// TODO implement this method
-		throw new MethodNotImplementedError();
-	}
 
-	public boolean add(Atom atom) throws AtomSetException {
-		// TODO implement this method
-		throw new MethodNotImplementedError();
-	}
-
-	public boolean addAll(Iterator<? extends Atom> atoms) throws AtomSetException {
-		// TODO implement this method
-		throw new MethodNotImplementedError();
-	}
-
-	public boolean addAll(AtomSet atoms) throws AtomSetException {
-		// TODO implement this method
-		throw new MethodNotImplementedError();
-	}
-
-	public boolean remove(Atom atom) throws AtomSetException {
-		// TODO implement this method
-		throw new MethodNotImplementedError();
-	}
-
-	public boolean removeAll(Iterator<? extends Atom> atoms) throws AtomSetException {
-		// TODO implement this method
-		throw new MethodNotImplementedError();
-	}
-
-	public boolean removeAll(AtomSet atoms) throws AtomSetException {
-		// TODO implement this method
-		throw new MethodNotImplementedError();
-	}
-
-	public void clear() throws AtomSetException {
-		// TODO implement this method
-		throw new MethodNotImplementedError();
-	}
-
-	public CloseableIterator<Atom> iterator() {
-		// TODO implement this method
-		throw new MethodNotImplementedError();
-	}
-
-	public CloseableIterator<Atom> match(Atom atom) throws AtomSetException {
-		// TODO implement this method
-		throw new MethodNotImplementedError();
-	}
-
-	public CloseableIterator<Predicate> predicatesIterator() throws AtomSetException {
-		// TODO implement this method
-		throw new MethodNotImplementedError();
-	}
-
-	public CloseableIterator<Term> termsIterator() throws AtomSetException {
-		// TODO implement this method
-		throw new MethodNotImplementedError();
-	}
-
-	public CloseableIterator<Term> termsIterator(Type type) throws AtomSetException {
-		// TODO implement this method
-		throw new MethodNotImplementedError();
-	}
-
-	public void close() {
-		// TODO implement this method
-		throw new MethodNotImplementedError();
-	}
 
 }
