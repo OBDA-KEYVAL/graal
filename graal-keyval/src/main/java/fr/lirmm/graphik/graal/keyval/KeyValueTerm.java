@@ -4,10 +4,10 @@ import fr.lirmm.graphik.graal.api.core.AbstractTerm;
 
 public class KeyValueTerm extends AbstractTerm {
 	
-	private String mLabel;
+	private Object mLabel;
 	private Type mType;
 
-	public KeyValueTerm(String label, Type type){
+	public KeyValueTerm(Object label, Type type){
 		this.mLabel = label;
 		this.mType= type;
 	}
@@ -31,7 +31,7 @@ public class KeyValueTerm extends AbstractTerm {
 	}
 
 	public String toString(){
-		return this.mLabel;
+		return this.mLabel.toString();
 	}
 	
 }
