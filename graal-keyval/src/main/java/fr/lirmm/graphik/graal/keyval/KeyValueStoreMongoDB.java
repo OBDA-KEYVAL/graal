@@ -156,16 +156,14 @@ public class KeyValueStoreMongoDB extends KeyValueStore {
 
 	public boolean containsInCollection(PathAtom pathAtom, String nameCol) throws AtomSetException {
 		// On initilise nos variables
-		Document docResult = new Document();
+		Document docResult = null;
 		
 		//On varie la requête en fonction du type du term de pathAtom
 		if(pathAtom.getTerm(0).getType() == Type.VARIABLE){
 			docResult = db.getCollection(nameCol).find(exists(pathAtom.getPathPredicate().toFieldName())).first();
 		}
 		else if(pathAtom.getTerm(0).getType() == Type.CONSTANT){
-			//TODO finir la transformation de pathAtom -> MongoDBQuery
 			docResult = db.getCollection(nameCol).find(eq(pathAtom.getPathPredicate().toFieldName(), pathAtom.getTerm(0).getIdentifier())).first();
-			System.out.println(docResult+":"+pathAtom.getTerm(0).getLabel());
 		}
 		else{
 			throw new AtomSetException("Le Term ne peut être de type Literal");
