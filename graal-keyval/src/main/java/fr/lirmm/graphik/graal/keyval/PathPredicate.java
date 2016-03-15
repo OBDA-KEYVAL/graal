@@ -44,11 +44,14 @@ package fr.lirmm.graphik.graal.keyval;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Set;
 
 import fr.lirmm.graphik.graal.api.core.Predicate;
 
 import javax.sql.RowSet;
+
+import org.apache.commons.lang3.NotImplementedException;
 
 import fr.lirmm.graphik.util.MethodNotImplementedError;
 
@@ -97,6 +100,21 @@ public class PathPredicate {
 			return null;
 		else
 			return predicatesList.get(i);
+	}
+	
+	public String toFieldName(){
+		String res = "";
+		Iterator<Predicate> itrPre = predicatesList.iterator();
+		while(itrPre.hasNext()){
+			String pre = (String)itrPre.next().getIdentifier();
+			if(!itrPre.hasNext()){
+				res = res+pre;
+			}
+			else{
+				res = res + pre + ".";
+			}
+		}
+		return res;
 	}
 	
 	public String toString(){
