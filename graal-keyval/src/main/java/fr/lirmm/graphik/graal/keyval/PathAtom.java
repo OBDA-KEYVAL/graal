@@ -98,7 +98,7 @@ public class PathAtom implements Atom{
 	
 	public Term getTerm(int index) {
 		// TODO implement this method
-		throw new MethodNotImplementedError();
+		return term;
 	}
 
 	
@@ -121,7 +121,7 @@ public class PathAtom implements Atom{
 
 	public PathPredicate getPathPredicate() {
 		// TODO Auto-generated method stub
-		return null;
+		return pathPredicat;
 	}
 
 	public Iterator<Term> iterator() {
