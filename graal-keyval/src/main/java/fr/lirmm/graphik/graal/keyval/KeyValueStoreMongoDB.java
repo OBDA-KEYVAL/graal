@@ -104,7 +104,8 @@ public class KeyValueStoreMongoDB extends KeyValueStore {
 		client = new MongoClient(add, port);
 		db = client.getDatabase(dbname);
 	}
-
+	
+	// Import dans la collection choisie un fichier JSON qui ce doit d'être minifié.
 	public void importJsonIntoCollection(String collname, String jsonFile) throws IOException {
 		MongoCollection<Document> collection = this.db.getCollection(collname);
 		BufferedReader reader = new BufferedReader(new FileReader(jsonFile));
@@ -127,8 +128,15 @@ public class KeyValueStoreMongoDB extends KeyValueStore {
 			System.out.println("\t" + str);
 		}
 	}
+	
+	public void showCollectionsDeeper(){
+		MongoCursor<Document> itrCol = db.listCollections().iterator();
+		while(itrCol.hasNext()){
+			System.out.println(itrCol.next().getString("name"));
+		}
+	}
 
-	public boolean contains(Atom pathAtom) throws AtomSetException {
+	public boolean contains(PathAtom pathAtom) throws AtomSetException {
 		// On initialise nos variable
 		Boolean result = false;
 		ListCollectionsIterable<Document> listColl = db.listCollections();
@@ -139,16 +147,30 @@ public class KeyValueStoreMongoDB extends KeyValueStore {
 
 			// On test si la pathAtome posséde un homomorphisme dans la
 			// collection
-			if (containsInCollection(pathAtom, itrCol.next())) {
+			if (containsInCollection(pathAtom, itrCol.next().getString("name"))) {
 				result = true;
 			}
 		}
 		return result;
 	}
 
-	public boolean containsInCollection(Atom pathAtom, Document doc) {
-
-		return true;
+	public boolean containsInCollection(PathAtom pathAtom, String nameCol) throws AtomSetException {
+		// On initilise nos variables
+		Document docResult = new Document();
+		
+		//On varie la requête en fonction du type du term de pathAtom
+		if(pathAtom.getTerm(0).getType() == Type.VARIABLE){
+			docResult = db.getCollection(nameCol).find(exists(pathAtom.getPathPredicate().toFieldName())).first();
+		}
+		else if(pathAtom.getTerm(0).getType() == Type.CONSTANT){
+			//TODO finir la transformation de pathAtom -> MongoDBQuery
+			docResult = db.getCollection(nameCol).find(eq(pathAtom.getPathPredicate().toFieldName(), pathAtom.getTerm(0).getIdentifier())).first();
+			System.out.println(docResult+":"+pathAtom.getTerm(0).getLabel());
+		}
+		else{
+			throw new AtomSetException("Le Term ne peut être de type Literal");
+		}
+		return docResult==null?false:true;
 	}
 
 	public Set<Predicate> getPredicates() throws AtomSetException {
