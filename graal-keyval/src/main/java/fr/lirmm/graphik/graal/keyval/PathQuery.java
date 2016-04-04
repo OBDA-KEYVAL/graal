@@ -52,7 +52,6 @@ import fr.lirmm.graphik.util.MethodNotImplementedError;
  */
 public class PathQuery extends PathAtom implements Query {
 
-	private PathQueryParser parser;
 	
 	public PathQuery(PathPredicate pp, Term tr) {
 		super(pp, tr);
@@ -72,9 +71,6 @@ public class PathQuery extends PathAtom implements Query {
 	}
 
 
-	public Term getTerm() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 }

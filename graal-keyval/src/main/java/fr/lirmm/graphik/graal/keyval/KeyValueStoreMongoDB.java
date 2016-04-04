@@ -104,7 +104,7 @@ public class KeyValueStoreMongoDB extends KeyValueStore {
 	}
 	
 	// Import dans la collection choisie un fichier JSON qui ce doit d'être minifié.
-	public void importJsonIntoCollection(String collname, String jsonFile) throws IOException {
+	private void importJsonIntoCollection(String collname, String jsonFile) throws IOException {
 		MongoCollection<Document> collection = this.db.getCollection(collname);
 		BufferedReader reader = new BufferedReader(new FileReader(jsonFile));
 		try {
@@ -124,15 +124,18 @@ public class KeyValueStoreMongoDB extends KeyValueStore {
 		System.out.println("Collections :");
 		for (String str : colls) {
 			System.out.println("\t" + str);
+			MongoCollection<Document> collection = db.getCollection(str);
+			MongoCursor<Document> cursor = collection.find().iterator();
+			try{
+				while(cursor.hasNext()){
+					System.out.println(cursor.next().toJson());
+				}
+			} finally {
+				cursor.close();
+			}
 		}
 	}
 	
-	public void showCollectionsDeeper(){
-		MongoCursor<Document> itrCol = db.listCollections().iterator();
-		while(itrCol.hasNext()){
-			System.out.println(itrCol.next().toJson());
-		}
-	}
 
 	public boolean contains(PathAtom pathAtom) throws AtomSetException {
 		// On initialise nos variable
@@ -172,12 +175,13 @@ public class KeyValueStoreMongoDB extends KeyValueStore {
 	public boolean isEmpty() throws AtomSetException {
 		return db.listCollectionNames().first().isEmpty();
 	}
-	public boolean add(PathAtom atom) throws AtomSetException {
+	public boolean add(PathQuery pathquery) throws AtomSetException {
 		if(currentCollection == null){
 			throw new Error("Aucune collection n'est pointé");
 		}
-		return true;
-		
+		PathQueryParser parser = new PathQueryParser();
+		this.currentCollection.insertOne(Document.parse(parser.getJsonQuery(pathquery).toString()));
+		return true;		
 	}
 	public boolean addAll(Iterator<? extends Atom> atoms) throws AtomSetException {
 		// TODO implement this method

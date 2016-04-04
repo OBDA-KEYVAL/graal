@@ -66,6 +66,8 @@ public class PathAtom implements Atom{
 		term = tr;
 	}
 	
+
+	
 	public int compareTo(Atom arg0) {
 		// TODO implement this method
 		throw new MethodNotImplementedError();

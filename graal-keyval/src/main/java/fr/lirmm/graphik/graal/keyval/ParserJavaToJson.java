@@ -23,7 +23,7 @@ public class ParserJavaToJson extends Parser{
 		for(Predicate pred : listPreds){
 			listKeys.add((String) pred.getIdentifier());
 		}
-		 Term term = pthQuery.getTerm();
+		 Term term = pthQuery.getTerm(0);
 		
 		JSONObject queryJson = constructJson(new JSONObject(), listKeys, listKeys.size(), term);
 		
