@@ -47,10 +47,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 
 import org.bson.Document;
+import org.json.JSONObject;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 
@@ -83,7 +85,7 @@ public class KeyValueStoreMongoDB extends KeyValueStore {
 	private MongoClient client;
 	private MongoDatabase db;
 	private MongoCollection<Document> currentCollection;
-	
+
 	public KeyValueStoreMongoDB() throws ParseException {
 		client = new MongoClient();
 	}
@@ -96,15 +98,16 @@ public class KeyValueStoreMongoDB extends KeyValueStore {
 		client = new MongoClient(add, port);
 		db = client.getDatabase(dbname);
 	}
-	
-	public KeyValueStoreMongoDB(String add,Integer port,String dbname,String colname) throws ParseException{
-		client = new MongoClient(add,port);
+
+	public KeyValueStoreMongoDB(String add, Integer port, String dbname, String colname) throws ParseException {
+		client = new MongoClient(add, port);
 		db = client.getDatabase(dbname);
 		currentCollection = db.getCollection(colname);
 	}
-	
-	// Import dans la collection choisie un fichier JSON qui ce doit d'être minifié.
-	private void importJsonIntoCollection(String collname, String jsonFile) throws IOException {
+
+	// Import dans la collection choisie un fichier JSON qui ce doit d'être
+	// minifié.
+	public void importJsonIntoCollection(String collname, String jsonFile) throws IOException {
 		MongoCollection<Document> collection = this.db.getCollection(collname);
 		BufferedReader reader = new BufferedReader(new FileReader(jsonFile));
 		try {
@@ -119,23 +122,27 @@ public class KeyValueStoreMongoDB extends KeyValueStore {
 
 	}
 
-	public void showCollections() {
+	public void showAllCollections() {
 		MongoIterable<String> colls = this.db.listCollectionNames();
 		System.out.println("Collections :");
 		for (String str : colls) {
 			System.out.println("\t" + str);
 			MongoCollection<Document> collection = db.getCollection(str);
-			MongoCursor<Document> cursor = collection.find().iterator();
-			try{
-				while(cursor.hasNext()){
-					System.out.println(cursor.next().toJson());
-				}
-			} finally {
-				cursor.close();
-			}
+			showCollection(collection);
 		}
 	}
-	
+
+	public void showCollection(MongoCollection<Document> col) {
+		System.out.println(col.getNamespace().getCollectionName() + " : ");
+		MongoCursor<Document> cursor = col.find().iterator();
+		try {
+			while (cursor.hasNext()) {
+				System.out.println(cursor.next().toJson());
+			}
+		} finally {
+			cursor.close();
+		}
+	}
 
 	public boolean contains(PathAtom pathAtom) throws AtomSetException {
 		// On initialise nos variable
@@ -158,97 +165,119 @@ public class KeyValueStoreMongoDB extends KeyValueStore {
 	public boolean containsInCollection(PathAtom pathAtom, String nameCol) throws AtomSetException {
 		// On initilise nos variables
 		Document docResult = null;
-		
-		//On varie la requête en fonction du type du term de pathAtom
-		if(pathAtom.getTerm(0).getType() == Type.VARIABLE){
+
+		// On varie la requête en fonction du type du term de pathAtom
+		if (pathAtom.getTerm(0).getType() == Type.VARIABLE) {
 			docResult = db.getCollection(nameCol).find(exists(pathAtom.getPathPredicate().toFieldName())).first();
-		}
-		else if(pathAtom.getTerm(0).getType() == Type.CONSTANT){
-			docResult = db.getCollection(nameCol).find(eq(pathAtom.getPathPredicate().toFieldName(), pathAtom.getTerm(0).getIdentifier())).first();
-		}
-		else{
+		} else if (pathAtom.getTerm(0).getType() == Type.CONSTANT) {
+			docResult = db.getCollection(nameCol)
+					.find(eq(pathAtom.getPathPredicate().toFieldName(), pathAtom.getTerm(0).getIdentifier())).first();
+		} else {
 			throw new AtomSetException("Le Term ne peut être de type Literal");
 		}
-		return docResult==null?false:true;
+		return docResult == null ? false : true;
+	}
+
+	public ArrayList<String> get(PathQuery pathquery) {
+		ArrayList<String> arr = new ArrayList<String>();
+		MongoCursor<Document> cursor;
+		if(pathquery.getTerm(0).isConstant())
+			cursor = currentCollection.find(eq(pathquery.getPathPredicate().toFieldName(), pathquery.getTerm(0).toString())).iterator();
+		else
+			cursor = currentCollection.find(exists(pathquery.getPathPredicate().toFieldName())).iterator();
+		while (cursor.hasNext()) {
+			Document document = (Document) cursor.next();
+			arr.add(document.toJson());
+		}
+		return arr;
 	}
 
 	public boolean isEmpty() throws AtomSetException {
 		return db.listCollectionNames().first().isEmpty();
 	}
+
 	public boolean add(PathQuery pathquery) throws AtomSetException {
-		if(currentCollection == null){
+		if (currentCollection == null) {
 			throw new Error("Aucune collection n'est pointé");
 		}
 		PathQueryParser parser = new PathQueryParser();
 		this.currentCollection.insertOne(Document.parse(parser.getJsonQuery(pathquery).toString()));
-		return true;		
+		return true;
 	}
+
 	public boolean addAll(Iterator<? extends Atom> atoms) throws AtomSetException {
-		// TODO implement this method
-		throw new MethodNotImplementedError();
+		while (atoms.hasNext()) {
+			PathQuery atom = (PathQuery) atoms.next();
+			this.add(atom);
+		}
+		return true;
 	}
-	
+
 	public boolean addAll(AtomSet atoms) throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
-	
+
 	public boolean remove(Atom atom) throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
-	
+
 	public boolean removeAll(Iterator<? extends Atom> atoms) throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
-	
+
 	public boolean removeAll(AtomSet atoms) throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
-	
+
 	public void clear() throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
-	
+
 	public CloseableIterator<Atom> iterator() {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
-	
+
 	public CloseableIterator<Atom> match(Atom atom) throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
-	
+
 	public CloseableIterator<Predicate> predicatesIterator() throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
-	
+
 	public CloseableIterator<Term> termsIterator() throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
-	
+
 	public CloseableIterator<Term> termsIterator(Type type) throws AtomSetException {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
-	
+
 	public void close() {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
-	
+
 	public MongoCollection<Document> getCurrentCollection() {
 		return currentCollection;
 	}
 
 	public void setCurrentCollection(String colname) {
 		this.currentCollection = db.getCollection(colname);
+	}
+
+	public MongoDatabase getDatabase() {
+		return db;
 	}
 
 	////////////////////////////////////
@@ -273,7 +302,5 @@ public class KeyValueStoreMongoDB extends KeyValueStore {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
 	}
-
-
 
 }
