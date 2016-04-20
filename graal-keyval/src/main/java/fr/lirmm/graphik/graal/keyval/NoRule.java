@@ -62,12 +62,12 @@ public class NoRule implements Rule {
 
 	private RuleParser parser;
 	
-	private PathAtom mPremisse;
-	private PathAtom mConclusion;
+	private PathAtom body;
+	private PathAtom head;
 
-	public NoRule(PathAtom premisse, PathAtom conclusion){
-		this.mPremisse = premisse;
-		this.mConclusion = conclusion;
+	public NoRule(PathAtom body, PathAtom head){
+		this.body = body;
+		this.head = head;
 		this.parser = new RuleParser();
 	}
 	
@@ -76,23 +76,23 @@ public class NoRule implements Rule {
 	}
 	
 	public PathAtom getBodyPathAtom(){
-		return this.mPremisse;
+		return this.body;
 	}
 	
 	public PathAtom getHeadPathAtom(){
-		return this.mConclusion;
+		return this.head;
 	}
 	
-	public void setBodyPathAtom(PathAtom premisse){
-		this.mPremisse = premisse;
+	public void setBodyPathAtom(PathAtom body){
+		this.body = body;
 	}
 	
-	public void setHeadPathAtom(PathAtom conclusion){
-		this.mConclusion = conclusion;
+	public void setHeadPathAtom(PathAtom head){
+		this.head = head;
 	}
 	
 	public boolean isNoRL2(){
-		ArrayList<Predicate> predsBody = this.mPremisse.getPathPredicate().getPredicates();
+		ArrayList<Predicate> predsBody = this.body.getPathPredicate().getPredicates();
 		if(predsBody.size() > 1){
 			return true;
 		}
@@ -158,7 +158,7 @@ public class NoRule implements Rule {
 	}
 
 	public String toString(){
-		return this.mPremisse.toString() + " -> " + this.mConclusion.toString();
+		return this.body.toString() + " -> " + this.head.toString();
 	}
 
 }
