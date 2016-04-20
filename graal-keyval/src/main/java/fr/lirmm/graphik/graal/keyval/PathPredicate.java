@@ -87,6 +87,14 @@ public class PathPredicate {
 		pathSize++;
 	}
 	
+	public ArrayList<String> predicatesToStrings(){
+		ArrayList<String> keysPred = new ArrayList<String>();
+		for(Predicate pred : predicatesList){
+			keysPred.add((String) pred.getIdentifier());
+		}
+		return keysPred;
+	}
+	
 	public Integer getSizePath(){
 		return pathSize;
 	}

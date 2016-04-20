@@ -12,7 +12,7 @@ import fr.lirmm.graphik.graal.api.core.Term.Type;
 //Cette classe transforme une requete JSONObject en PathQuery
 //et une regle JSONObject en NoRule
 public class ParserJsonToJava extends Parser {
-		
+	
 	//Parse une requete json en PathQuery
 	@Override
 	public Object parseQuery(Object obj){

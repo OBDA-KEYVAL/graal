@@ -7,6 +7,11 @@ public class KeyValueTerm extends AbstractTerm {
 	private Object mLabel;
 	private Type mType;
 
+	public KeyValueTerm(){
+		this.mLabel = "";
+		this.mType = Type.VARIABLE;
+	}
+	
 	public KeyValueTerm(Object label, Type type){
 		this.mLabel = label;
 		this.mType= type;

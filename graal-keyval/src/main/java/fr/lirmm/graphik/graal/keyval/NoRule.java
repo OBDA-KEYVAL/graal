@@ -42,9 +42,13 @@
  */
 package fr.lirmm.graphik.graal.keyval;
 
+import java.util.ArrayList;
 import java.util.Set;
 
+import org.json.JSONObject;
+
 import fr.lirmm.graphik.graal.api.core.InMemoryAtomSet;
+import fr.lirmm.graphik.graal.api.core.Predicate;
 import fr.lirmm.graphik.graal.api.core.Rule;
 import fr.lirmm.graphik.graal.api.core.Term;
 import fr.lirmm.graphik.graal.api.core.Term.Type;
@@ -55,15 +59,46 @@ import fr.lirmm.graphik.util.MethodNotImplementedError;
  *
  */
 public class NoRule implements Rule {
-	private PathAtom body;
-	private PathAtom head;
+
 	private RuleParser parser;
 	
-	public NoRule(PathAtom pthAtom1, PathAtom pthAtom2) {
-		// TODO Auto-generated constructor stub
+	private PathAtom mPremisse;
+	private PathAtom mConclusion;
+
+	public NoRule(PathAtom premisse, PathAtom conclusion){
+		this.mPremisse = premisse;
+		this.mConclusion = conclusion;
+		this.parser = new RuleParser();
 	}
-
-
+	
+	public JSONObject exportJson(){
+		return this.parser.getJsonRule(this);
+	}
+	
+	public PathAtom getBodyPathAtom(){
+		return this.mPremisse;
+	}
+	
+	public PathAtom getHeadPathAtom(){
+		return this.mConclusion;
+	}
+	
+	public void setBodyPathAtom(PathAtom premisse){
+		this.mPremisse = premisse;
+	}
+	
+	public void setHeadPathAtom(PathAtom conclusion){
+		this.mConclusion = conclusion;
+	}
+	
+	public boolean isNoRL2(){
+		ArrayList<Predicate> predsBody = this.mPremisse.getPathPredicate().getPredicates();
+		if(predsBody.size() > 1){
+			return true;
+		}
+		return false;
+	}
+	
 	public int compareTo(Rule o) {
 		// TODO implement this method
 		throw new MethodNotImplementedError();
@@ -78,13 +113,12 @@ public class NoRule implements Rule {
 	
 	public String getLabel() {
 		// TODO implement this method
-		throw new MethodNotImplementedError();
+		return "";
 	}
 
 	
 	public void setLabel(String label) {
 		// TODO implement this method
-		throw new MethodNotImplementedError();
 	}
 
 	
@@ -123,18 +157,8 @@ public class NoRule implements Rule {
 		throw new MethodNotImplementedError();
 	}
 
-
-	public PathAtom getPremisse() {
-		// TODO Auto-generated method stub
-		return null;
+	public String toString(){
+		return this.mPremisse.toString() + " -> " + this.mConclusion.toString();
 	}
-
-
-	public PathAtom getConclusion() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 
 }

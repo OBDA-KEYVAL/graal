@@ -23,7 +23,7 @@ public class ParserJavaToJson extends Parser{
 		for(Predicate pred : listPreds){
 			listKeys.add((String) pred.getIdentifier());
 		}
-		 Term term = pthQuery.getTerm(0);
+		 Term term = pthQuery.getTerm();
 		
 		JSONObject queryJson = constructJson(new JSONObject(), listKeys, listKeys.size(), term);
 		
@@ -35,23 +35,23 @@ public class ParserJavaToJson extends Parser{
 	public Object parseRule(Object obj) {
 		NoRule noRule = (NoRule) obj;
 		
-		PathAtom premisse = noRule.getPremisse();		
+		PathAtom premisse = noRule.getBodyPathAtom();		
 		ArrayList<Predicate> listPreds1 = premisse.getPathPredicate().getPredicates();
 		ArrayList<String> listKeys1 = new ArrayList<String>();
 		for(Predicate pred : listPreds1){
 			listKeys1.add((String) pred.getIdentifier());
 		}
 		
-		Term term1 = premisse.getTerm(0);
+		Term term1 = premisse.getTerm();
 		
-		PathAtom conclusion = noRule.getConclusion();		
+		PathAtom conclusion = noRule.getHeadPathAtom();		
 		ArrayList<Predicate> listPreds2 = conclusion.getPathPredicate().getPredicates();
 		ArrayList<String> listKeys2 = new ArrayList<String>();
 		for(Predicate pred : listPreds2){
 			listKeys2.add((String) pred.getIdentifier());
 		}
 		
-		Term term2 = conclusion.getTerm(0);
+		Term term2 = conclusion.getTerm();
 		
 		JSONObject bodyJson = constructJson(new JSONObject(), listKeys1, listKeys1.size(), term1); 
 		JSONObject headJson = constructJson(new JSONObject(), listKeys2, listKeys2.size(), term2);

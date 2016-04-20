@@ -61,74 +61,78 @@ public class PathAtom implements Atom{
 	private PathPredicate pathPredicat;
 	private Term term;
 	
+	public PathAtom (){
+		pathPredicat = new PathPredicate();
+		term = new KeyValueTerm();
+	}
+	
 	public PathAtom (PathPredicate pp,Term tr){
 		pathPredicat = pp;
 		term = tr;
 	}
 	
-
+	public PathPredicate getPathPredicate(){
+		return this.pathPredicat;
+	}
 	
+	public void setPathPredicate(PathPredicate pathPred){
+		this.pathPredicat = pathPred;
+	}
+	
+	public Term getTerm(){
+		return this.term;
+	}
+	
+	public void setTerm(Term term){
+		this.term = term;
+	}
+
 	public int compareTo(Atom arg0) {
-		// TODO implement this method
-		throw new MethodNotImplementedError();
-	}
-
-	
-	public void appendTo(StringBuilder sb) {
-		// TODO implement this method
-		throw new MethodNotImplementedError();
-	}
-
-	
-	public void setPredicate(Predicate predicate) {
-		// TODO implement this method
-		throw new MethodNotImplementedError();
-	}
-
-	
-	public Predicate getPredicate() {
-		// TODO implement this method
-		throw new MethodNotImplementedError();
-	}
-
-	
-	public void setTerm(int index, Term term) {
-		// TODO implement this method
-		throw new MethodNotImplementedError();
-	}
-
-	
-	public Term getTerm(int index) {
-		// TODO implement this method
-		return term;
-	}
-
-	
-	public List<Term> getTerms() {
-		// TODO implement this method
-		throw new MethodNotImplementedError();
-	}
-
-	
-	public Collection<Term> getTerms(Type type) {
-		// TODO implement this method
-		throw new MethodNotImplementedError();
-	}
-
-	//Toujours un seul term sur nos PathAtome 
-	public Iterator<Predicate> preiterator() {
-		// TODO implement this method
-		throw new MethodNotImplementedError();
-	}
-
-	public PathPredicate getPathPredicate() {
 		// TODO Auto-generated method stub
-		return pathPredicat;
+		return 0;
+	}
+
+	public void appendTo(StringBuilder arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Predicate getPredicate() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Term getTerm(int arg0) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Term> getTerms() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Collection<Term> getTerms(Type arg0) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setPredicate(Predicate arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setTerm(int arg0, Term arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public String toString(){
+		return this.pathPredicat.toString() + " " + this.term.toString();
 	}
 
 	public Iterator<Term> iterator() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

@@ -42,6 +42,8 @@
  */
 package fr.lirmm.graphik.graal.keyval;
 
+import java.util.ArrayList;
+
 import fr.lirmm.graphik.graal.api.core.Rule;
 import fr.lirmm.graphik.graal.grd.GraphOfRuleDependencies;
 import fr.lirmm.graphik.util.MethodNotImplementedError;
@@ -52,10 +54,62 @@ import fr.lirmm.graphik.util.MethodNotImplementedError;
  */
 public class GraphOfNORLRuleDependencies extends GraphOfRuleDependencies {
 
+	private ArrayList<Rule> rules;
+	
+	public GraphOfNORLRuleDependencies(ArrayList<Rule> rules){
+		super();
+		this.rules = rules;
+		for(Rule r : rules) {
+			addRule(r);
+		}
+		for(Rule r1 : rules){
+			for(Rule r2 : rules){
+				computeDependency(r1, r2, DependencyChecker.DEFAULT);
+			}
+		}
+	}
+	
 	@Override
     protected void computeDependency(Rule r1, Rule r2, DependencyChecker checker) {
-		// TODO implement this method
-		throw new MethodNotImplementedError();
+		// TODO implement this method		
+		if(existDependency((NoRule)r1, (NoRule)r2)){
+			addDependency(r1, r2);
+		}
+	}
+	
+	public boolean existDependency(NoRule r1, NoRule r2){
+		ArrayList<String> keysPredHeadR1 = r1.getHeadPathAtom().getPathPredicate().predicatesToStrings();
+		ArrayList<String> keysPredBodyR2 = r2.getBodyPathAtom().getPathPredicate().predicatesToStrings();
+		
+		for(String s1 : keysPredHeadR1){
+			for(String s2 : keysPredBodyR2){
+				if(s1.equals(s2)){
+					return true;
+				}
+			}
+		}
+		
+		return false;
 	}
 
+	public ArrayList<NoRule> getRules_NoRL2(){
+		ArrayList<NoRule> rules_norl2 = new ArrayList<NoRule>();
+		for(Rule r : rules){
+			NoRule norl_r = (NoRule)r;
+			if(norl_r.isNoRL2()){
+				rules_norl2.add(norl_r);
+			}
+		}
+		return rules_norl2;
+	}
+	
+	public ArrayList<NoRule> getChild(NoRule r){
+		ArrayList<NoRule> fils = new ArrayList<NoRule>();
+		Iterable<Integer> tabInt = getOutgoingEdgesOf(r);
+		for(Integer i : tabInt){
+			fils.add((NoRule)getEdgeTarget(i));
+		}		
+		return fils;
+	}
 }
+
