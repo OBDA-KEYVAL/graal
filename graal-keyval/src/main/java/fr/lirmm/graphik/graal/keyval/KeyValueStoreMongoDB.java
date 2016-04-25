@@ -51,6 +51,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.bson.BsonType;
 import org.bson.Document;
 import org.json.JSONObject;
 import org.json.simple.JSONArray;
@@ -64,6 +65,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoIterable;
+import static com.mongodb.client.model.Projections.*;
 
 import static com.mongodb.client.model.Filters.*;
 
@@ -167,11 +169,11 @@ public class KeyValueStoreMongoDB extends KeyValueStore {
 		Document docResult = null;
 
 		// On varie la requête en fonction du type du term de pathAtom
-		if (pathAtom.getTerm(0).getType() == Type.VARIABLE) {
+		if (pathAtom.getTerm().getType() == Type.VARIABLE) {
 			docResult = db.getCollection(nameCol).find(exists(pathAtom.getPathPredicate().toFieldName())).first();
-		} else if (pathAtom.getTerm(0).getType() == Type.CONSTANT) {
+		} else if (pathAtom.getTerm().getType() == Type.CONSTANT) {
 			docResult = db.getCollection(nameCol)
-					.find(eq(pathAtom.getPathPredicate().toFieldName(), pathAtom.getTerm(0).getIdentifier())).first();
+					.find(eq(pathAtom.getPathPredicate().toFieldName(), pathAtom.getTerm().getIdentifier())).first();
 		} else {
 			throw new AtomSetException("Le Term ne peut être de type Literal");
 		}
@@ -180,11 +182,13 @@ public class KeyValueStoreMongoDB extends KeyValueStore {
 
 	public ArrayList<String> get(PathQuery pathquery) {
 		ArrayList<String> arr = new ArrayList<String>();
+		String fieldName = pathquery.getPathPredicate().toFieldName();
+		String term = pathquery.getTerm().toString();
 		MongoCursor<Document> cursor;
-		if(pathquery.getTerm(0).isConstant())
-			cursor = currentCollection.find(eq(pathquery.getPathPredicate().toFieldName(), pathquery.getTerm(0).toString())).iterator();
+		if(pathquery.getTerm().isConstant())
+			cursor = currentCollection.find(and(eq(fieldName, term),nor(type(fieldName,BsonType.DOCUMENT),type(fieldName,BsonType.DB_POINTER),type(fieldName, BsonType.UNDEFINED),type(fieldName, BsonType.NULL)))).projection(fields(include(fieldName))).iterator();
 		else
-			cursor = currentCollection.find(exists(pathquery.getPathPredicate().toFieldName())).iterator();
+			cursor = currentCollection.find(and(exists(fieldName),nor(type(fieldName,BsonType.DOCUMENT),type(fieldName,BsonType.DB_POINTER),type(fieldName, BsonType.UNDEFINED),type(fieldName, BsonType.NULL)))).projection(fields(include(fieldName))).iterator();
 		while (cursor.hasNext()) {
 			Document document = (Document) cursor.next();
 			arr.add(document.toJson());
