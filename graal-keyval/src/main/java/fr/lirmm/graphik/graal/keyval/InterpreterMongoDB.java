@@ -1,0 +1,288 @@
+package fr.lirmm.graphik.graal.keyval;
+
+import java.io.Console;
+import java.io.IOException;
+import java.nio.channels.ShutdownChannelGroupException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import org.bson.Document;
+import org.json.JSONObject;
+import org.omg.CosNaming.NamingContextExtPackage.AddressHelper;
+
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoIterable;
+import com.mongodb.util.JSON;
+
+import fr.lirmm.graphik.graal.api.core.AtomSetException;
+import fr.lirmm.graphik.graal.api.core.Predicate;
+import fr.lirmm.graphik.graal.api.core.Term;
+import fr.lirmm.graphik.graal.api.core.Term.Type;
+import jline.TerminalFactory;
+import jline.console.ConsoleReader;
+import jline.console.completer.FileNameCompleter;
+
+public class InterpreterMongoDB {
+	private static boolean Finish = false;
+	private static ArrayList<PathQuery> arrPathQuery = new ArrayList<PathQuery>();
+
+	public static final String ANSI_RESET = "\u001B[0m";
+	public static final String ANSI_BLACK = "\u001B[30m";
+	public static final String ANSI_RED = "\u001B[31m";
+	public static final String ANSI_GREEN = "\u001B[32m";
+	public static final String ANSI_YELLOW = "\u001B[33m";
+	public static final String ANSI_BLUE = "\u001B[34m";
+	public static final String ANSI_PURPLE = "\u001B[35m";
+	public static final String ANSI_CYAN = "\u001B[36m";
+	public static final String ANSI_WHITE = "\u001B[37m";
+
+	private static KeyValueStoreMongoDB connect() {
+		try {
+			Scanner scan = new Scanner(System.in);
+			System.out.print(ANSI_CYAN + "\tSet Host : " + ANSI_RESET);
+			String host = scan.next();
+			System.out.print(ANSI_CYAN + "\tSet Port : " + ANSI_RESET);
+			String port = scan.next();
+			System.out.print(ANSI_CYAN + "\tChoose the database : " + ANSI_RESET);
+			String db = scan.next();
+			KeyValueStoreMongoDB kvs = new KeyValueStoreMongoDB(host, Integer.parseInt(port), db);
+			return kvs;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private static void prompt(KeyValueStoreMongoDB store) {
+		if (store == null) {
+			System.out.print("\n" + ANSI_YELLOW + "@:@//> " + ANSI_RESET);
+		} else if (store.getCurrentCollection() == null) {
+			System.out.print("\n" + ANSI_YELLOW + store.getDatabase().getName() + ":@//> " + ANSI_RESET);
+		} else {
+			System.out.print("\n" + ANSI_YELLOW + store.getDatabase().getName() + ":"
+					+ store.getCurrentCollection().getNamespace().getCollectionName() + "//> " + ANSI_RESET);
+		}
+
+	}
+
+	public static void main(String[] args) {
+
+		KeyValueStoreMongoDB store = null;
+		Scanner scan = new Scanner(System.in);
+		while (!Finish) {
+			prompt(store);
+			String input = scan.next();
+			switch (input) {
+
+			case "connect":
+				try {
+					store = connect();
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				break;
+
+			case "defaultConnect":
+				try {
+					store = new KeyValueStoreMongoDB("localhost", 27017, "test");
+					Thread.sleep(2000);
+				} catch (InterruptedException | ParseException e) {
+					e.printStackTrace();
+				}
+				break;
+
+			case "check":
+				if (arrPathQuery.isEmpty()) {
+					System.out.println(ANSI_RED + "Pas de requête en mémoire" + ANSI_RESET);
+				} else {
+					System.out.println(ANSI_CYAN + "Requête disponible : " + ANSI_RESET);
+					Integer cpt = 0;
+					for (PathQuery pathQuery : arrPathQuery) {
+						System.out.println(ANSI_GREEN + cpt + ANSI_CYAN + " :: "
+								+ pathQuery.getPathPredicate().toString() + " : " + pathQuery.getTerm().toString()
+								+ " -- " + (pathQuery.getTerm().isConstant() ? "Cst" : "Var") + ANSI_RESET);
+						cpt++;
+					}
+					System.out.print(ANSI_CYAN + "Choose one : " + ANSI_RESET);
+					Integer ind = scan.nextInt();
+					try {
+						System.out
+								.println(ANSI_GREEN
+										+ store.containsInCollection(arrPathQuery.get(ind),
+												store.getCurrentCollection().getNamespace().getCollectionName())
+										+ ANSI_RESET);
+					} catch (AtomSetException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
+				}
+				break;
+
+			case "createQuery":
+				System.out.print(ANSI_CYAN + "Json Query : " + ANSI_RESET);
+				String str = scan.next();
+				PathQueryParser parser = new PathQueryParser();
+				arrPathQuery.add(parser.getJavaQuery(new JSONObject(str)));
+				break;
+
+			case "get":
+				if (arrPathQuery.isEmpty()) {
+					System.out.println(ANSI_RED + "Pas de requête en mémoire" + ANSI_RESET);
+				} else {
+					System.out.println(ANSI_CYAN + "Requête disponible : " + ANSI_RESET);
+					Integer cpt1 = 0;
+					for (PathQuery pathQuery : arrPathQuery) {
+						System.out.println(ANSI_GREEN + cpt1 + ANSI_CYAN + " :: "
+								+ pathQuery.getPathPredicate().toString() + " : " + pathQuery.getTerm().toString()
+								+ " -- " + (pathQuery.getTerm().isConstant() ? "Cst" : "Var") + ANSI_RESET);
+						cpt1++;
+					}
+					System.out.print("Choose one : ");
+					Integer ind1 = scan.nextInt();
+					for (String str1 : store.get(arrPathQuery.get(ind1))) {
+						System.out.println(ANSI_GREEN + str1 + ANSI_RESET);
+					}
+				}
+				break;
+
+			case "showQuery":
+				if (arrPathQuery.isEmpty()) {
+					System.out.println(ANSI_RED + "Pas de requête..." + ANSI_RESET);
+				} else {
+					Integer cpt11 = 0;
+					for (PathQuery pathQuery : arrPathQuery) {
+						System.out.println(ANSI_GREEN + cpt11 + ANSI_CYAN + " :: "
+								+ pathQuery.getPathPredicate().toString() + " : " + pathQuery.getTerm().toString()
+								+ " -- " + (pathQuery.getTerm().isConstant() ? "Cst" : "Var") + ANSI_RESET);
+						cpt11++;
+					}
+				}
+				break;
+
+			case "importJson":
+				MongoIterable<String> colls = store.getDatabase().listCollectionNames();
+				System.out.println(
+						ANSI_CYAN + "Collections in database : " + store.getDatabase().getName() + ANSI_YELLOW);
+				for (String string : colls) {
+					System.out.println("\t-- " + string);
+				}
+				System.out.print(ANSI_CYAN + "Choose one or create it : " + ANSI_RESET);
+				String col = scan.next();
+				System.out.print(ANSI_CYAN + "\tJson's path : " + ANSI_RESET);
+				String pathJson = scan.next();
+				try {
+					store.importJsonIntoCollection(store.getCurrentCollection().getNamespace().getCollectionName(),
+							pathJson);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				break;
+
+			case "saveQuery":
+				for (PathQuery pquery : arrPathQuery) {
+					try {
+						store.add(pquery);
+					} catch (AtomSetException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				break;
+
+			case "loadQuery":
+				arrPathQuery.clear();
+				PathQueryParser pars = new PathQueryParser();
+				MongoCursor<Document> cur = store.getCurrentCollection().find().iterator();
+				while (cur.hasNext()) {
+					Document document = (Document) cur.next();
+					arrPathQuery.add(pars.getJavaQuery(new JSONObject(document.toJson())));
+				}
+				break;
+
+			case "setCollection":
+				MongoIterable<String> colls1 = store.getDatabase().listCollectionNames();
+				System.out.println(
+						ANSI_CYAN + "Collections in database : " + store.getDatabase().getName() + ANSI_RESET);
+				for (String string : colls1) {
+					System.out.println(ANSI_GREEN+"\t-- " + string+ANSI_RESET);
+				}
+				System.out.print(ANSI_CYAN + "Choose one or create it : " + ANSI_RESET);
+				String col1 = scan.next();
+				System.out.println(" ");
+				store.setCurrentCollection(col1);
+				break;
+
+			case "showCollection":
+				if (store.getCurrentCollection() == null) {
+					System.out.println(ANSI_RED + "Pas de collection courante ...." + ANSI_RESET);
+				} else {
+					store.showCollection(store.getCurrentCollection());
+				}
+				break;
+
+			case "help":
+				System.out.println("--connect : Connection à la DB\n"
+						+ "--check : vérfie la présence d'un PathPredicat dans une collection"
+						+ "--createQuery : Creer un objet de type PathQuery\n" + "--exit : Sortie de programme\n"
+						+ "--defaultConnect : Connection localhost:27017@Test\n"
+						+ "--get : retourne toute les documents satisfaits par la requête\n" + "--help : C'est ici\n"
+						+ "--importJson : Ajout d'un document dans la colleciton courante\n"
+						+ "--setCollection : Selectionne la collection courante\n"
+						+ "--showCollection : Retourne tout les document de la collection\n"
+						+ "--loadQuery : Charge la collection courante en requêtes\n"
+						+ "--saveQuery : Ajout toutes les requêtes en mémoire dans la collection courante\n"
+						+ "--showQuery : Retourne l'ensemble des requête en mémoire\n");
+				break;
+
+			case "exit":
+				Finish = true;
+				System.out.println("Good bye, see you later!");
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				break;
+
+			default:
+				System.out.println("La commande incompatible : " + input);
+				break;
+			}
+
+		}
+
+		// try {
+		// // Connection au Store MongoDB
+		// store = new KeyValueStoreMongoDB("localhost", 27017,
+		// "test","acteurs");
+		//
+		// // Construction d'un pathQuerye
+		// KeyValueTerm tr = new KeyValueTerm(203, Type.CONSTANT);
+		// Predicate pre1 = new Predicate("info", 1);
+		// Predicate pre2 = new Predicate("x", 1);
+		// ArrayList<Predicate> arrPredicates = new ArrayList<Predicate>();
+		// arrPredicates.add(pre1);
+		// arrPredicates.add(pre2);
+		// PathPredicate pp = new PathPredicate(arrPredicates);
+		// PathQuery pathQuery = new PathQuery(pp, tr);
+		// // Interogation du Store
+		// store.showCollections();
+		// store.add(pathQuery);
+		// System.out.println(store.contains(pathQuery));
+		//
+		// System.out.println(store.isEmpty());
+		// } catch (ParseException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// } catch (AtomSetException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+	}
+}

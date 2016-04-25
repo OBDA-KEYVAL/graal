@@ -82,11 +82,11 @@
 			<version>2.6.2</version>
 		</dependency>
 		<dependency>
-			<groupId>com.riotapi</groupId>
-			<artifactId>riotapi</artifactId>
-			<version>1.0</version>
+			<groupId>jline</groupId>
+			<artifactId>jline</artifactId>
+			<version>2.6</version>
+			<scope>compile</scope>
 		</dependency>
-
 
 	</dependencies>
 
@@ -109,7 +109,7 @@
 							<transformers>
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>fr.lirmm.graphik.graal.keyval.Main</mainClass>
+									<mainClass>fr.lirmm.graphik.graal.keyval.InterpreterMongoDB</mainClass>
 								</transformer>
 							</transformers>
 						</configuration>
