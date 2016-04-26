@@ -26,6 +26,8 @@ import jline.console.completer.FileNameCompleter;
 public class InterpreterMongoDB {
 	private static boolean Finish = false;
 	private static ArrayList<PathQuery> arrPathQuery = new ArrayList<PathQuery>();
+	private static ArrayList<ArrayList<PathQuery>> arrCheckGet = new ArrayList<ArrayList<PathQuery>>();
+	private static ArrayList<NoRule> arrRules = new ArrayList<NoRule>();
 
 	public static final String ANSI_RESET = "\u001B[0m";
 	public static final String ANSI_BLACK = "\u001B[30m";
@@ -67,6 +69,18 @@ public class InterpreterMongoDB {
 
 	}
 
+	private static Integer showQuery() {
+		Integer cpt1 = 0;
+		for (PathQuery pathQuery : arrPathQuery) {
+			System.out.println(ANSI_GREEN + cpt1 + " :: " + ANSI_CYAN + pathQuery.getPathPredicate().toFieldName()
+					+ ANSI_YELLOW + " => " + ANSI_CYAN + pathQuery.getTerm().toString() + " -- "
+					+ (pathQuery.getTerm().isConstant() ? "Cst" : "Var") + ANSI_RESET);
+			cpt1++;
+		}
+		System.out.print(ANSI_YELLOW + "Choose one : " + ANSI_RESET);
+		return cpt1;
+	}
+
 	public static void main(String[] args) {
 
 		KeyValueStoreMongoDB store = null;
@@ -100,14 +114,7 @@ public class InterpreterMongoDB {
 					System.out.println(ANSI_RED + "Pas de requête en mémoire" + ANSI_RESET);
 				} else {
 					System.out.println(ANSI_CYAN + "Requête disponible : " + ANSI_RESET);
-					Integer cpt = 0;
-					for (PathQuery pathQuery : arrPathQuery) {
-						System.out.println(ANSI_GREEN + cpt + ANSI_CYAN + " :: "
-								+ pathQuery.getPathPredicate().toString() + " : " + pathQuery.getTerm().toString()
-								+ " -- " + (pathQuery.getTerm().isConstant() ? "Cst" : "Var") + ANSI_RESET);
-						cpt++;
-					}
-					System.out.print(ANSI_CYAN + "Choose one : " + ANSI_RESET);
+					showQuery();
 					Integer ind = scan.nextInt();
 					try {
 						System.out
@@ -129,35 +136,98 @@ public class InterpreterMongoDB {
 				arrPathQuery.add(parser.getJavaQuery(new JSONObject(str)));
 				break;
 
+			case "createCheckGet":
+				if (arrPathQuery.isEmpty()) {
+					System.out.println(ANSI_RED + "Pas de requête en mémoire" + ANSI_RESET);
+				} else {
+					System.out.println(ANSI_WHITE + "Requête disponible" + ANSI_YELLOW + " CHECK : " + ANSI_RESET);
+					showQuery();
+					Integer ind1 = scan.nextInt();
+					System.out.println(ANSI_WHITE + "Requête disponible " + ANSI_YELLOW + "GET : " + ANSI_RESET);
+					showQuery();
+					Integer ind2 = scan.nextInt();
+					ArrayList<PathQuery> queryCheckGet = new ArrayList<PathQuery>();
+					queryCheckGet.add(arrPathQuery.get(ind1));
+					queryCheckGet.add(arrPathQuery.get(ind2));
+					arrCheckGet.add(queryCheckGet);
+				}
+				break;
+
+			case "createNoRule":
+				Parser p1 = new ParserJsonToJava();
+				System.out.print(ANSI_CYAN + "Body : " + ANSI_RESET);
+				String body = scan.next();
+				System.out.print(ANSI_CYAN + "Head : " + ANSI_RESET);
+				String head = scan.next();
+				String res = "{\"body\": " + body + ", \"head\": " + head + "}";
+				NoRule n1 = (NoRule) p1.parseRule(new JSONObject(res));
+				arrRules.add(n1);
+				break;
+
+			case "showNoRules":
+				if (arrRules.isEmpty()) {
+					System.out.println(ANSI_RED + "Pas de régle en mémoire" + ANSI_RESET);
+				} else {
+					for (NoRule rls : arrRules) {
+						System.out.println(rls.toString());
+					}
+				}
+				break;
+			
+			case "backwardChainer":
+				showQuery();
+				Integer i1= scan.nextInt();
+				Integer i2= scan.nextInt();
+				PathQueryBackwardChainer pthQBC = new PathQueryBackwardChainer(arrPathQuery.get(i1), arrPathQuery.get(i2), arrRules);
+				ArrayList<ArrayList<PathQuery>> reform = pthQBC.backwardNaif();
+				for(ArrayList<PathQuery> array : reform){
+					for(PathQuery q : array){
+						System.out.print(q + " / ");
+					}
+					System.out.println();
+				}
+				break;
+			
 			case "get":
 				if (arrPathQuery.isEmpty()) {
 					System.out.println(ANSI_RED + "Pas de requête en mémoire" + ANSI_RESET);
 				} else {
 					System.out.println(ANSI_CYAN + "Requête disponible : " + ANSI_RESET);
-					Integer cpt1 = 0;
-					for (PathQuery pathQuery : arrPathQuery) {
-						System.out.println(ANSI_GREEN + cpt1 + ANSI_CYAN + " :: "
-								+ pathQuery.getPathPredicate().toString() + " : " + pathQuery.getTerm().toString()
-								+ " -- " + (pathQuery.getTerm().isConstant() ? "Cst" : "Var") + ANSI_RESET);
-						cpt1++;
-					}
-					System.out.print("Choose one : ");
+					showQuery();
 					Integer ind1 = scan.nextInt();
 					for (String str1 : store.get(arrPathQuery.get(ind1))) {
 						System.out.println(ANSI_GREEN + str1 + ANSI_RESET);
 					}
 				}
+
+			case "dropMem":
+				arrCheckGet = new ArrayList<ArrayList<PathQuery>>();
+				arrPathQuery = new ArrayList<PathQuery>();
+				System.out.println(ANSI_GREEN + "Cache clear" + ANSI_RESET);
 				break;
 
 			case "showQuery":
 				if (arrPathQuery.isEmpty()) {
 					System.out.println(ANSI_RED + "Pas de requête..." + ANSI_RESET);
 				} else {
+					showQuery();
+				}
+				break;
+
+			case "showCheckGet":
+				if (arrCheckGet.isEmpty()) {
+					System.out.println(ANSI_RED + "Pas de requête..." + ANSI_RESET);
+				} else {
 					Integer cpt11 = 0;
-					for (PathQuery pathQuery : arrPathQuery) {
-						System.out.println(ANSI_GREEN + cpt11 + ANSI_CYAN + " :: "
-								+ pathQuery.getPathPredicate().toString() + " : " + pathQuery.getTerm().toString()
-								+ " -- " + (pathQuery.getTerm().isConstant() ? "Cst" : "Var") + ANSI_RESET);
+					for (ArrayList<PathQuery> pathQueryChkGet : arrCheckGet) {
+						System.out.println(ANSI_GREEN + cpt11 + ANSI_YELLOW + "  Check" + ANSI_CYAN + " :: "
+								+ pathQueryChkGet.get(0).getPathPredicate().toFieldName() + ANSI_YELLOW + " => "
+								+ ANSI_CYAN + pathQueryChkGet.get(0).getTerm().toString() + " -- "
+								+ (pathQueryChkGet.get(0).getTerm().isConstant() ? "Cst" : "Var") + " || " + ANSI_YELLOW
+								+ "GET" + ANSI_CYAN + " :: " + pathQueryChkGet.get(1).getPathPredicate().toFieldName()
+								+ ANSI_YELLOW + " => " + ANSI_CYAN + pathQueryChkGet.get(1).getTerm().toString()
+								+ " -- " + (pathQueryChkGet.get(1).getTerm().isConstant() ? "Cst" : "Var")
+								+ ANSI_RESET);
 						cpt11++;
 					}
 				}
@@ -194,6 +264,16 @@ public class InterpreterMongoDB {
 				}
 				break;
 
+			case "saveCheckGet":
+				for (ArrayList<PathQuery> chkget : arrCheckGet) {
+					try {
+						store.add(chkget);
+					} catch (AtomSetException e) {
+						e.printStackTrace();
+					}
+				}
+				break;
+
 			case "loadQuery":
 				arrPathQuery.clear();
 				PathQueryParser pars = new PathQueryParser();
@@ -204,12 +284,28 @@ public class InterpreterMongoDB {
 				}
 				break;
 
+			case "loadCheckGet":
+				arrCheckGet.clear();
+				PathQueryParser pars1 = new PathQueryParser();
+				MongoCursor<Document> cur1 = store.getCurrentCollection().find().iterator();
+				while (cur1.hasNext()) {
+					Document document = (Document) cur1.next();
+					System.out.println(document.get("check"));
+					System.out.println(document.get("get"));
+					ArrayList<PathQuery> arrCk = new ArrayList<PathQuery>();
+					arrCk.add(pars1.getJavaQuery(new JSONObject(document.get("check"))));
+					arrCk.add(pars1.getJavaQuery(new JSONObject(document.get("get"))));
+					arrCheckGet.add(arrCk);
+
+				}
+				break;
+
 			case "setCollection":
 				MongoIterable<String> colls1 = store.getDatabase().listCollectionNames();
-				System.out.println(
-						ANSI_CYAN + "Collections in database : " + store.getDatabase().getName() + ANSI_RESET);
+				System.out
+						.println(ANSI_CYAN + "Collections in database : " + store.getDatabase().getName() + ANSI_RESET);
 				for (String string : colls1) {
-					System.out.println(ANSI_GREEN+"\t-- " + string+ANSI_RESET);
+					System.out.println(ANSI_GREEN + "\t-- " + string + ANSI_RESET);
 				}
 				System.out.print(ANSI_CYAN + "Choose one or create it : " + ANSI_RESET);
 				String col1 = scan.next();
@@ -227,16 +323,18 @@ public class InterpreterMongoDB {
 
 			case "help":
 				System.out.println("--connect : Connection à la DB\n"
-						+ "--check : vérfie la présence d'un PathPredicat dans une collection"
-						+ "--createQuery : Creer un objet de type PathQuery\n" + "--exit : Sortie de programme\n"
-						+ "--defaultConnect : Connection localhost:27017@Test\n"
-						+ "--get : retourne toute les documents satisfaits par la requête\n" + "--help : C'est ici\n"
-						+ "--importJson : Ajout d'un document dans la colleciton courante\n"
-						+ "--setCollection : Selectionne la collection courante\n"
-						+ "--showCollection : Retourne tout les document de la collection\n"
-						+ "--loadQuery : Charge la collection courante en requêtes\n"
-						+ "--saveQuery : Ajout toutes les requêtes en mémoire dans la collection courante\n"
-						+ "--showQuery : Retourne l'ensemble des requête en mémoire\n");
+						+ "-- check : vérfie la présence d'un PathPredicat dans une collection\n"
+						+ "-- createCheckGet : Creer un objet de type ArrayList<PathQuery>"
+						+ "-- createQuery : Creer un objet de type PathQuery\n" + "-- exit : Sortie de programme\n"
+						+ "-- defaultConnect : Connection localhost:27017@Test\n" + "-- dropMem : Efface le cache"
+						+ "-- get : retourne toute les documents satisfaits par la requête\n" + "-- help : C'est ici\n"
+						+ "-- importJson : Ajout d'un document dans la colleciton courante\n"
+						+ "-- setCollection : Selectionne la collection courante\n"
+						+ "-- showCheckGet : Retourne toute les requêtes checkGet en mémoire "
+						+ "-- showCollection : Retourne tout les document de la collection\n"
+						+ "-- loadQuery : Charge la collection courante en requêtes\n"
+						+ "-- saveQuery : Ajout toutes les requêtes en mémoire dans la collection courante\n"
+						+ "-- showQuery : Retourne l'ensemble des requête en mémoire\n");
 				break;
 
 			case "exit":

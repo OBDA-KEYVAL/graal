@@ -208,6 +208,15 @@ public class KeyValueStoreMongoDB extends KeyValueStore {
 		this.currentCollection.insertOne(Document.parse(parser.getJsonQuery(pathquery).toString()));
 		return true;
 	}
+	
+	public boolean add(ArrayList<PathQuery> chkget) throws AtomSetException{
+		if (currentCollection == null) {
+			throw new Error("Aucune collection n'est pointé");
+		}
+		PathQueryParser parser = new PathQueryParser();
+		this.currentCollection.insertOne(new Document().append("check", parser.getJsonQuery(chkget.get(0)).toString()).append("get", parser.getJsonQuery(chkget.get(1)).toString()));
+		return true;
+	}
 
 	public boolean addAll(Iterator<? extends Atom> atoms) throws AtomSetException {
 		while (atoms.hasNext()) {
