@@ -179,6 +179,14 @@ public class KeyValueStoreMongoDB extends KeyValueStore {
 		}
 		return docResult == null ? false : true;
 	}
+	
+	public ArrayList<String> checkGet(PathQuery checkQuery,PathQuery getQuery,String nameCol) throws AtomSetException{
+		ArrayList<String> res = new ArrayList<String>();
+		if(containsInCollection(checkQuery, nameCol)){
+			res.addAll(get(getQuery));
+		}
+		return res;
+	}
 
 	public ArrayList<String> get(PathQuery pathquery) {
 		ArrayList<String> arr = new ArrayList<String>();
@@ -186,9 +194,9 @@ public class KeyValueStoreMongoDB extends KeyValueStore {
 		String term = pathquery.getTerm().toString();
 		MongoCursor<Document> cursor;
 		if(pathquery.getTerm().isConstant())
-			cursor = currentCollection.find(and(eq(fieldName, term),nor(type(fieldName,BsonType.DOCUMENT),type(fieldName,BsonType.DB_POINTER),type(fieldName, BsonType.UNDEFINED),type(fieldName, BsonType.NULL)))).projection(fields(include(fieldName))).iterator();
+			cursor = currentCollection.find(and(eq(fieldName, term),nor(type(fieldName,BsonType.DOCUMENT),type(fieldName,BsonType.DB_POINTER),type(fieldName, BsonType.UNDEFINED),type(fieldName, BsonType.NULL)))).projection(fields(include(fieldName),excludeId())).iterator();
 		else
-			cursor = currentCollection.find(and(exists(fieldName),nor(type(fieldName,BsonType.DOCUMENT),type(fieldName,BsonType.DB_POINTER),type(fieldName, BsonType.UNDEFINED),type(fieldName, BsonType.NULL)))).projection(fields(include(fieldName))).iterator();
+			cursor = currentCollection.find(and(exists(fieldName),nor(type(fieldName,BsonType.DOCUMENT),type(fieldName,BsonType.DB_POINTER),type(fieldName, BsonType.UNDEFINED),type(fieldName, BsonType.NULL)))).projection(fields(include(fieldName),excludeId())).iterator();
 		while (cursor.hasNext()) {
 			Document document = (Document) cursor.next();
 			arr.add(document.toJson());

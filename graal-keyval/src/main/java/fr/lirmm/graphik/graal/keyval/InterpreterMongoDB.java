@@ -106,6 +106,7 @@ public class InterpreterMongoDB {
 					+ ANSI_RESET);
 			cpt11++;
 		}
+		System.out.print(ANSI_YELLOW+"Choose One :"+ANSI_RESET);
 		return cpt11;
 	}
 
@@ -153,6 +154,22 @@ public class InterpreterMongoDB {
 					} catch (AtomSetException e2) {
 						// TODO Auto-generated catch block
 						e2.printStackTrace();
+					}
+				}
+				break;
+				
+			case "checkget":
+				if(arrCheckGet.isEmpty()){
+					System.out.println(ANSI_RED+"No query in cache ..."+ANSI_RESET);
+				}else{
+					System.out.println(ANSI_WHITE + "Requête disponible" + ANSI_YELLOW + " CHECK : " + ANSI_RESET);
+					showCheckGet();
+					Integer ind1 = scan.nextInt();
+					try {
+						System.out.println(ANSI_GREEN+store.checkGet(arrCheckGet.get(ind1).get(0),arrCheckGet.get(ind1).get(1) , store.getCurrentCollection().getNamespace().getCollectionName()));
+					} catch (AtomSetException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 				}
 				break;
@@ -209,6 +226,8 @@ public class InterpreterMongoDB {
 
 					showCheckGet();
 					Integer i1 = scan.nextInt();
+//					System.out.println("Record it in current collection ? (Yes/No)");
+//					String str1 = scan.next();
 					PathQueryBackwardChainer pthQBC = new PathQueryBackwardChainer(arrCheckGet.get(i1).get(0),
 							arrCheckGet.get(i1).get(1), arrRules);
 					ArrayList<ArrayList<PathQuery>> reform = pthQBC.backwardNaif();
@@ -218,6 +237,18 @@ public class InterpreterMongoDB {
 						}
 						System.out.println();
 					}
+					reform.add(arrCheckGet.get(i1));
+					arrCheckGet.addAll(reform);
+//					if(str1 == "Yes"){
+//						for(ArrayList<PathQuery> arr : reform){
+//							try {
+//								store.add(arr);
+//							} catch (AtomSetException e) {
+//								e.printStackTrace();
+//							}
+//						}
+//					}
+					
 				}
 				break;
 
@@ -324,21 +355,21 @@ public class InterpreterMongoDB {
 				}
 				break;
 
-//			case "loadCheckGet":
-//				arrCheckGet.clear();
-//				PathQueryParser pars1 = new PathQueryParser();
-//				MongoCursor<Document> cur1 = store.getCurrentCollection().find().iterator();
-//				while (cur1.hasNext()) {
-//					Document document = (Document) cur1.next();
-//					System.out.println(document.get("check"));
-//					System.out.println(document.get("get"));
-//					ArrayList<PathQuery> arrCk = new ArrayList<PathQuery>();
-//					arrCk.add(pars1.getJavaQuery(new JSONObject(document.get("check"))));
-//					arrCk.add(pars1.getJavaQuery(new JSONObject(document.get("get"))));
-//					arrCheckGet.add(arrCk);
-//
-//				}
-//				break;
+			case "loadCheckGet":
+				arrCheckGet.clear();
+				PathQueryParser pars1 = new PathQueryParser();
+				MongoCursor<Document> cur1 = store.getCurrentCollection().find().iterator();
+				while (cur1.hasNext()) {
+					Document document = (Document) cur1.next();
+					System.out.println(document.get("check"));
+					System.out.println(document.get("get"));
+					ArrayList<PathQuery> arrCk = new ArrayList<PathQuery>();
+					arrCk.add(pars1.getJavaQuery(new JSONObject(document.get("check"))));
+					arrCk.add(pars1.getJavaQuery(new JSONObject(document.get("get"))));
+					arrCheckGet.add(arrCk);
+
+				}
+				break;
 				
 			case "loadRule":
 				arrRules.clear();
@@ -374,17 +405,21 @@ public class InterpreterMongoDB {
 			case "help":
 				System.out.println("--connect : Connection à la DB\n"
 						+ "-- check : vérfie la présence d'un PathPredicat dans une collection\n"
-						+ "-- createCheckGet : Creer un objet de type ArrayList<PathQuery>"
+						+ "-- checkget : intéroge le store sous la forme CheckGet\n"
+						+ "-- createCheckGet : Creer un objet de type ArrayList<PathQuery>\n"
 						+ "-- createQuery : Creer un objet de type PathQuery\n" 
 						+ "-- exit : Sortie de programme\n"
 						+ "-- defaultConnect : Connection localhost:27017@Test\n" 
 						+ "-- dropMem : Efface le cache\n"
+						+ "-- dropCol : Efface la collection coutante\n"
 						+ "-- get : retourne toute les documents satisfaits par la requête\n" 
 						+ "-- help : C'est ici\n"
 						+ "-- importJson : Ajout d'un document dans la colleciton courante\n"
+						+ "-- refCheckGet : Reformulation de la requête checkget"
 						+ "-- setCollection : Selectionne la collection courante\n"
-						+ "-- showCheckGet : Retourne toute les requêtes checkGet en mémoire "
+						+ "-- showCheckGet : Retourne toute les requêtes checkGet en mémoire\n "
 						+ "-- showCollection : Retourne tout les document de la collection\n"
+						+ "-- loadRule  : Charge la collection courante en régles\n"
 						+ "-- loadQuery : Charge la collection courante en requêtes\n"
 						+ "-- saveQuery : Ajout toutes les requêtes en mémoire dans la collection courante\n"
 						+ "-- showQuery : Retourne l'ensemble des requête en mémoire\n");
