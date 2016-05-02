@@ -231,13 +231,6 @@ public class InterpreterMongoDB {
 					PathQueryBackwardChainer pthQBC = new PathQueryBackwardChainer(arrCheckGet.get(i1).get(0),
 							arrCheckGet.get(i1).get(1), arrRules);
 					ArrayList<ArrayList<PathQuery>> reform = pthQBC.backwardNaif();
-					for (ArrayList<PathQuery> array : reform) {
-						for (PathQuery q : array) {
-							System.out.print(q + " / ");
-						}
-						System.out.println();
-					}
-					reform.add(arrCheckGet.get(i1));
 					arrCheckGet.addAll(reform);
 //					if(str1 == "Yes"){
 //						for(ArrayList<PathQuery> arr : reform){
