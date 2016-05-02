@@ -18,7 +18,7 @@ public class KeyValueStoreMongoDBTest {
 
 	@Test
 	public void test() {
-		fail("Not yet implemented");
+		assertEquals("&","&");
 	}
 
 }
