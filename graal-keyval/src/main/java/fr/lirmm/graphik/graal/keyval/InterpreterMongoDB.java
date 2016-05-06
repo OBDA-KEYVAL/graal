@@ -8,6 +8,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import org.bson.BsonDocument;
+import org.bson.BsonValue;
 import org.bson.Document;
 import org.json.JSONObject;
 import org.omg.CosNaming.NamingContextExtPackage.AddressHelper;
@@ -173,6 +175,21 @@ public class InterpreterMongoDB {
 					}
 				}
 				break;
+				
+			case "checkgetAll":
+				if(arrCheckGet.isEmpty()){
+					System.out.println(ANSI_RED+"No query in cache ..."+ANSI_RESET);
+				}else{
+					try{
+						for (ArrayList<PathQuery> arr : arrCheckGet) {
+							System.out.println(ANSI_GREEN+store.checkGet(arr.get(0),arr.get(1) , store.getCurrentCollection().getNamespace().getCollectionName()));
+						}
+						
+					}catch(AtomSetException e){
+						e.printStackTrace();
+					}
+				}
+				break;
 
 			case "createQuery":
 				System.out.print(ANSI_CYAN + "Json Query : " + ANSI_RESET);
@@ -330,11 +347,8 @@ public class InterpreterMongoDB {
 
 			case "saveCheckGet":
 				for (ArrayList<PathQuery> chkget : arrCheckGet) {
-					try {
-						store.add(chkget);
-					} catch (AtomSetException e) {
-						e.printStackTrace();
-					}
+					Document doc = new Document().append("@check", JSON.parse(chkget.get(0).exportJson().toString())).append("@get", JSON.parse(chkget.get(1).exportJson().toString()));
+					store.getCurrentCollection().insertOne(doc);
 				}
 				break;
 
@@ -354,11 +368,11 @@ public class InterpreterMongoDB {
 				MongoCursor<Document> cur1 = store.getCurrentCollection().find().iterator();
 				while (cur1.hasNext()) {
 					Document document = (Document) cur1.next();
-					System.out.println(document.get("check"));
-					System.out.println(document.get("get"));
+					System.out.println(((Document)document.get("@check")).toJson());
+					System.out.println(((Document) document.get("@get")).toJson());
 					ArrayList<PathQuery> arrCk = new ArrayList<PathQuery>();
-					arrCk.add(pars1.getJavaQuery(new JSONObject(document.get("check"))));
-					arrCk.add(pars1.getJavaQuery(new JSONObject(document.get("get"))));
+					arrCk.add(pars1.getJavaQuery(new JSONObject(((Document)document.get("@check")).toJson())));
+					arrCk.add(pars1.getJavaQuery(new JSONObject(((Document)document.get("@get")).toJson())));
 					arrCheckGet.add(arrCk);
 
 				}
