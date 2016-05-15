@@ -91,9 +91,26 @@ public class NoRule implements Rule {
 		this.head = head;
 	}
 	
+	public boolean isNoRL1(){
+		ArrayList<Predicate> predsBody = this.body.getPathPredicate().getPredicates();
+		ArrayList<Predicate> predsHead = this.head.getPathPredicate().getPredicates();
+		if(predsBody.size() == 1 && predsHead.size() == 1){
+			return true;
+		}
+		return false;
+	}
+	
 	public boolean isNoRL2(){
 		ArrayList<Predicate> predsBody = this.body.getPathPredicate().getPredicates();
 		if(predsBody.size() > 1){
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isNoRL3(){
+		ArrayList<Predicate> predsHead = this.head.getPathPredicate().getPredicates();
+		if(predsHead.size() > 1){
 			return true;
 		}
 		return false;

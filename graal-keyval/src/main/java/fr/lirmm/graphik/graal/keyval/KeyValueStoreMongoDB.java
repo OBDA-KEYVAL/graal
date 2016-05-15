@@ -42,10 +42,21 @@
  */
 package fr.lirmm.graphik.graal.keyval;
 
+import static com.mongodb.client.model.Filters.*;
+import static com.mongodb.client.model.Projections.*;
+import static  com.mongodb.client.model.Updates.*;
+
+
+
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.io.Writer;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -53,21 +64,13 @@ import java.util.Set;
 
 import org.bson.BsonType;
 import org.bson.Document;
-import org.json.JSONObject;
-import org.json.simple.JSONArray;
-import org.json.simple.parser.JSONParser;
 
-import com.mongodb.DBCollection;
-import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.client.ListCollectionsIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoIterable;
-import static com.mongodb.client.model.Projections.*;
-
-import static com.mongodb.client.model.Filters.*;
 
 import fr.lirmm.graphik.graal.api.core.Atom;
 import fr.lirmm.graphik.graal.api.core.AtomSet;
@@ -87,6 +90,57 @@ public class KeyValueStoreMongoDB extends KeyValueStore {
 	private MongoClient client;
 	private MongoDatabase db;
 	private MongoCollection<Document> currentCollection;
+	
+	private static ArrayList<ArrayList<Long>> arrTest = new ArrayList<ArrayList<Long>>();
+	private static ArrayList<Long> arrChrono = new ArrayList<Long>();
+	
+	
+	public static void test(String action) throws IOException {
+		switch (action) {
+		case "flag":
+			System.out.println(System.currentTimeMillis());
+			arrChrono.add(System.currentTimeMillis());
+			break;
+			
+		case "addnclr":
+			arrTest.add(new ArrayList<Long>(arrChrono));
+			arrChrono.clear();
+			break;
+
+		case "show":
+			System.out.println(arrTest);
+			break;
+			
+		case "flush":
+			arrTest.clear();
+			break;
+		
+		case "writeTest":
+			Writer fileWriter = new FileWriter("test.csv",true);
+			fileWriter.write("checkTime;getTime;totalTime\n");
+			for (ArrayList<Long> arrlong : arrTest) {
+				Long checkTime = arrlong.get(1)-arrlong.get(0);
+				Long getTime;
+				Long totalTime;
+				if(arrlong.size()>2){
+					getTime = arrlong.get(2)-arrlong.get(1);
+					totalTime = arrlong.get(2)-arrlong.get(0);
+				}
+				else{
+					getTime = (long) 0;
+					totalTime = checkTime;
+				}
+				
+				fileWriter.write(checkTime+";"+getTime+";"+totalTime+"\n");
+			}
+			fileWriter.close();
+			
+			break;
+			
+		default:
+			break;
+		}
+	}
 
 	public KeyValueStoreMongoDB() throws ParseException {
 		client = new MongoClient();
@@ -180,11 +234,15 @@ public class KeyValueStoreMongoDB extends KeyValueStore {
 		return docResult == null ? false : true;
 	}
 	
-	public ArrayList<String> checkGet(PathQuery checkQuery,PathQuery getQuery,String nameCol) throws AtomSetException{
+	public ArrayList<String> checkGet(PathQuery checkQuery,PathQuery getQuery,String nameCol) throws AtomSetException, IOException{
+		test("flag");
 		ArrayList<String> res = new ArrayList<String>();
+		test("flag");
 		if(containsInCollection(checkQuery, nameCol)){
 			res.addAll(get(getQuery));
+		test("flag");
 		}
+		test("addnclr");
 		return res;
 	}
 
@@ -199,9 +257,16 @@ public class KeyValueStoreMongoDB extends KeyValueStore {
 			cursor = currentCollection.find(and(exists(fieldName),nor(type(fieldName,BsonType.DOCUMENT),type(fieldName,BsonType.DB_POINTER),type(fieldName, BsonType.UNDEFINED),type(fieldName, BsonType.NULL)))).projection(fields(include(fieldName),excludeId())).iterator();
 		while (cursor.hasNext()) {
 			Document document = (Document) cursor.next();
+			System.out.println(document.get(fieldName)+fieldName);
 			arr.add(document.toJson());
 		}
 		return arr;
+	}
+	
+	public void formatResult(String colName,String fieldName){
+		MongoCollection<Document> resCol = db.getCollection(colName);
+		resCol.updateMany(exists(fieldName),rename(fieldName, "result"));
+		
 	}
 
 	public boolean isEmpty() throws AtomSetException {

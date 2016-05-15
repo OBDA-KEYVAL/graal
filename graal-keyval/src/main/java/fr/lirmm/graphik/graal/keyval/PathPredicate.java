@@ -87,6 +87,11 @@ public class PathPredicate {
 		pathSize++;
 	}
 	
+	public void addPredicate(Predicate predicate, int position){
+		this.predicatesList.add(position, predicate);
+		pathSize++;
+	}
+	
 	public ArrayList<String> predicatesToStrings(){
 		ArrayList<String> keysPred = new ArrayList<String>();
 		for(Predicate pred : predicatesList){

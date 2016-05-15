@@ -1,19 +1,31 @@
 package fr.lirmm.graphik.graal.keyval;
 
+import java.io.BufferedReader;
 import java.io.Console;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.ParameterizedType;
 import java.nio.channels.ShutdownChannelGroupException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.xml.serialize.XMLSerializer;
 import org.bson.BsonDocument;
 import org.bson.BsonValue;
 import org.bson.Document;
+import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.XML;
 import org.omg.CosNaming.NamingContextExtPackage.AddressHelper;
 
+
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoIterable;
 import com.mongodb.util.JSON;
@@ -32,6 +44,8 @@ public class InterpreterMongoDB {
 	private static ArrayList<PathQuery> arrPathQuery = new ArrayList<PathQuery>();
 	private static ArrayList<ArrayList<PathQuery>> arrCheckGet = new ArrayList<ArrayList<PathQuery>>();
 	private static ArrayList<NoRule> arrRules = new ArrayList<NoRule>();
+	
+	
 
 	public static final String ANSI_RESET = "\u001B[0m";
 	public static final String ANSI_BLACK = "\u001B[30m";
@@ -42,6 +56,8 @@ public class InterpreterMongoDB {
 	public static final String ANSI_PURPLE = "\u001B[35m";
 	public static final String ANSI_CYAN = "\u001B[36m";
 	public static final String ANSI_WHITE = "\u001B[37m";
+	
+	
 
 	private static KeyValueStoreMongoDB connect() {
 		try {
@@ -112,7 +128,7 @@ public class InterpreterMongoDB {
 		return cpt11;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 
 		KeyValueStoreMongoDB store = null;
 		Scanner scan = new Scanner(System.in);
@@ -161,35 +177,98 @@ public class InterpreterMongoDB {
 				break;
 				
 			case "checkget":
-				if(arrCheckGet.isEmpty()){
-					System.out.println(ANSI_RED+"No query in cache ..."+ANSI_RESET);
-				}else{
-					System.out.println(ANSI_WHITE + "Requête disponible" + ANSI_YELLOW + " CHECK : " + ANSI_RESET);
-					showCheckGet();
-					Integer ind1 = scan.nextInt();
-					try {
-						System.out.println(ANSI_GREEN+store.checkGet(arrCheckGet.get(ind1).get(0),arrCheckGet.get(ind1).get(1) , store.getCurrentCollection().getNamespace().getCollectionName()));
-					} catch (AtomSetException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+				if (arrCheckGet.isEmpty()) {
+					System.out.println(ANSI_RED + "No query in cache ..." + ANSI_RESET);
+				} else {
+					System.out.println("Result Collection :");
+
+					MongoIterable<String> colls1 = store.getDatabase().listCollectionNames();
+					System.out.println(
+							ANSI_CYAN + "Collections in database : " + store.getDatabase().getName() + ANSI_RESET);
+					for (String string : colls1) {
+						System.out.println(ANSI_GREEN + "\t-- " + string + ANSI_RESET);
+					}
+					System.out.print(ANSI_CYAN + "Choose one or create it : " + ANSI_RESET);
+					String resColname = scan.next();
+					System.out.println(" ");
+
+					MongoCollection<Document> resCol = store.getDatabase().getCollection(resColname);
+
+					for (ArrayList<PathQuery> ind1 : arrCheckGet) {
+
+						try {
+							ArrayList<String> reschkget = store.checkGet(ind1.get(0), ind1.get(1),
+									store.getCurrentCollection().getNamespace().getCollectionName());
+							for (String strreschkget : reschkget) {
+								resCol.insertOne(Document.parse(strreschkget));
+							}
+							System.out.println(ANSI_GREEN + reschkget);
+						} catch (AtomSetException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				}
 				break;
 				
-			case "checkgetAll":
+			case "bufTest":
+				store.test("show");
+				break;
+			
+			case "bufTestFlush":
+				store.test("flush");
+				break;
+				
+			case "bufTestWrite":
+				store.test("writeTest");
+				break;
+				
+			
+				
+			case "formatResults":
 				if(arrCheckGet.isEmpty()){
-					System.out.println(ANSI_RED+"No query in cache ..."+ANSI_RESET);
-				}else{
-					try{
-						for (ArrayList<PathQuery> arr : arrCheckGet) {
-							System.out.println(ANSI_GREEN+store.checkGet(arr.get(0),arr.get(1) , store.getCurrentCollection().getNamespace().getCollectionName()));
-						}
-						
-					}catch(AtomSetException e){
-						e.printStackTrace();
+					System.out.println(ANSI_RED + "No query in cache ..." + ANSI_RESET);
+				}
+				else{
+					MongoCollection<Document> colres  = store.getCurrentCollection();
+					for(ArrayList<PathQuery> cg : arrCheckGet ){
+						store.formatResult(colres.getNamespace().getCollectionName(), cg.get(1).getPathPredicate().toFieldName());
+
 					}
 				}
 				break;
+				
+			case "xmarkImport":
+				try{
+					
+					System.out.print(ANSI_CYAN + "\tXML's path : " + ANSI_RESET);
+					String pathXml = scan.next();
+					String xml = FileUtils.readFileToString(new File(pathXml));
+					System.out.println(org.json.XML.toJSONObject(xml).toString());
+					store.getCurrentCollection().insertOne(Document.parse(org.json.XML.toJSONObject(xml).toString()));
+//					JSONObject xmlJsonObj = XML.toJSONObject(file.readLine());
+//					String pretyStr = xmlJsonObj.toString();
+//					System.out.println(xmlJsonObj.toString());
+				}catch (JSONException e){
+					
+					System.out.println(e.toString());
+				}
+				break;
+
+//			case "checkgetAll":
+//				if(arrCheckGet.isEmpty()){
+//					System.out.println(ANSI_RED+"No query in cache ..."+ANSI_RESET);
+//				}else{
+//					try{
+//						for (ArrayList<PathQuery> arr : arrCheckGet) {
+//							System.out.println(ANSI_GREEN+store.checkGet(arr.get(0),arr.get(1) , store.getCurrentCollection().getNamespace().getCollectionName()));
+//						}
+//						
+//					}catch(AtomSetException e){
+//						e.printStackTrace();
+//					}
+//				}
+//				break;
 
 			case "createQuery":
 				System.out.print(ANSI_CYAN + "Json Query : " + ANSI_RESET);
@@ -273,6 +352,7 @@ public class InterpreterMongoDB {
 						System.out.println(ANSI_GREEN + str1 + ANSI_RESET);
 					}
 				}
+				break;
 
 			case "dropCol":
 				if (store.getCurrentCollection() == null) {
@@ -368,8 +448,6 @@ public class InterpreterMongoDB {
 				MongoCursor<Document> cur1 = store.getCurrentCollection().find().iterator();
 				while (cur1.hasNext()) {
 					Document document = (Document) cur1.next();
-					System.out.println(((Document)document.get("@check")).toJson());
-					System.out.println(((Document) document.get("@get")).toJson());
 					ArrayList<PathQuery> arrCk = new ArrayList<PathQuery>();
 					arrCk.add(pars1.getJavaQuery(new JSONObject(((Document)document.get("@check")).toJson())));
 					arrCk.add(pars1.getJavaQuery(new JSONObject(((Document)document.get("@get")).toJson())));
