@@ -104,7 +104,7 @@ public class InterpreterMongoDB {
 	private static Integer showRule() {
 		Integer cpt3 = 0;
 		for (NoRule rule : arrRules) {
-			System.out.println(ANSI_GREEN + cpt3 + " :: " + ANSI_CYAN + rule.toString()+ ANSI_RESET);
+			System.out.println(ANSI_GREEN + cpt3 + " :: " + ANSI_CYAN + rule.toField()+ ANSI_RESET);
 			cpt3++;
 		}
 		System.out.print(ANSI_YELLOW+"Choose One :"+ANSI_RESET);
@@ -224,18 +224,8 @@ public class InterpreterMongoDB {
 				break;
 				
 			
-				
 			case "formatResults":
-				if(arrCheckGet.isEmpty()){
-					System.out.println(ANSI_RED + "No query in cache ..." + ANSI_RESET);
-				}
-				else{
-					MongoCollection<Document> colres  = store.getCurrentCollection();
-					for(ArrayList<PathQuery> cg : arrCheckGet ){
-						store.formatResult(colres.getNamespace().getCollectionName(), cg.get(1).getPathPredicate().toFieldName());
-
-					}
-				}
+					store.formatResult();
 				break;
 				
 			case "xmarkImport":
@@ -340,6 +330,32 @@ public class InterpreterMongoDB {
 					
 				}
 				break;
+				
+			case "refCheckGetOpti":
+				if (arrCheckGet.isEmpty() || arrRules.isEmpty()) {
+					System.out.println(ANSI_RED + "No query or rule in cache ...");
+				} else {
+
+					showCheckGet();
+					Integer i1 = scan.nextInt();
+//					System.out.println("Record it in current collection ? (Yes/No)");
+//					String str1 = scan.next();
+					PathQueryBackwardChainer pthQBC = new PathQueryBackwardChainer(arrCheckGet.get(i1).get(0),
+							arrCheckGet.get(i1).get(1), arrRules);
+					ArrayList<ArrayList<PathQuery>> reform = pthQBC.backwardOpti();
+					arrCheckGet.addAll(reform);
+//					if(str1 == "Yes"){
+//						for(ArrayList<PathQuery> arr : reform){
+//							try {
+//								store.add(arr);
+//							} catch (AtomSetException e) {
+//								e.printStackTrace();
+//							}
+//						}
+//					}
+					
+				}
+				break;
 
 			case "get":
 				if (arrPathQuery.isEmpty()) {
@@ -373,6 +389,11 @@ public class InterpreterMongoDB {
 				arrPathQuery = new ArrayList<PathQuery>();
 				System.out.println(ANSI_GREEN + "Cache clear" + ANSI_RESET);
 				break;
+				
+			case "dropCheckGet":
+				arrCheckGet = new ArrayList<ArrayList<PathQuery>>();
+				System.out.println(ANSI_GREEN + "Cache clear" + ANSI_RESET);
+				break;
 
 			case "showQuery":
 				if (arrPathQuery.isEmpty()) {
@@ -381,6 +402,7 @@ public class InterpreterMongoDB {
 					showQuery();
 				}
 				break;
+				
 				
 			case "showRule":
 				if(arrRules.isEmpty()){

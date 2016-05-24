@@ -45,8 +45,8 @@ package fr.lirmm.graphik.graal.keyval;
 import static com.mongodb.client.model.Filters.*;
 import static com.mongodb.client.model.Projections.*;
 import static  com.mongodb.client.model.Updates.*;
-
-
+import com.mongodb.client.model.Aggregates.*;
+import com.mongodb.util.JSON;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -57,13 +57,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.Writer;
+import java.sql.Array;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 
+import java.util.regex.*;
+
 import org.bson.BsonType;
 import org.bson.Document;
+import org.json.JSONObject;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.ListCollectionsIterable;
@@ -98,7 +102,6 @@ public class KeyValueStoreMongoDB extends KeyValueStore {
 	public static void test(String action) throws IOException {
 		switch (action) {
 		case "flag":
-			System.out.println(System.currentTimeMillis());
 			arrChrono.add(System.currentTimeMillis());
 			break;
 			
@@ -257,15 +260,31 @@ public class KeyValueStoreMongoDB extends KeyValueStore {
 			cursor = currentCollection.find(and(exists(fieldName),nor(type(fieldName,BsonType.DOCUMENT),type(fieldName,BsonType.DB_POINTER),type(fieldName, BsonType.UNDEFINED),type(fieldName, BsonType.NULL)))).projection(fields(include(fieldName),excludeId())).iterator();
 		while (cursor.hasNext()) {
 			Document document = (Document) cursor.next();
-			System.out.println(document.get(fieldName)+fieldName);
 			arr.add(document.toJson());
 		}
 		return arr;
 	}
 	
-	public void formatResult(String colName,String fieldName){
-		MongoCollection<Document> resCol = db.getCollection(colName);
-		resCol.updateMany(exists(fieldName),rename(fieldName, "result"));
+	public void dataToResult(){
+		
+	}
+	
+	public void formatResult(){
+		System.out.println(InterpreterMongoDB.ANSI_YELLOW+"Results : "+InterpreterMongoDB.ANSI_GREEN);
+		MongoCursor<Document> resCol = currentCollection.find().projection(excludeId()).iterator();
+		Pattern pat = Pattern.compile("\\w+=(?!Document\\{\\{)([\\w+\\ ]+)");
+		while(resCol.hasNext()){
+			String doc = resCol.next().toString();
+			Matcher mat = pat.matcher(doc);
+			while(mat.find()){
+				System.out.println("\t"+mat.group(1));
+				
+			}
+			
+		}
+		System.out.println(InterpreterMongoDB.ANSI_RESET);
+		//resCol.distinct(arg0, arg1);
+		//resCol.updateMany(exists(fieldName),rename(fieldName, "result"));
 		
 	}
 

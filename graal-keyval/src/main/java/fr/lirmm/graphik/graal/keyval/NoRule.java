@@ -177,5 +177,11 @@ public class NoRule implements Rule {
 	public String toString(){
 		return this.body.toString() + " -> " + this.head.toString();
 	}
+	
+	public String toField(){
+		return this.body.getPathPredicate().toFieldName()+" : ("+this.body.getTerm().getLabel() + ") -> " + this.head.getPathPredicate().toFieldName()+" : (" +this.head.getTerm().getLabel()+')';
+	}
+	
+	
 
 }
